@@ -1,8 +1,6 @@
-from django.http.response import HttpResponse
 from django.shortcuts import render
 from .forms import *
 from .models import *
-from django.views.generic import CreateView
 
 def Home(request):
     return render(request, 'Home.html')
@@ -15,6 +13,10 @@ def show_participant(request,id):
 
 def show_azmoon(request):
     azmoons = Azmoon.objects.all()
+    for azmoon in azmoons:
+        q = Question.objects.all().filter(azmoon__id=azmoon.id)
+        azmoon.Question_number = q.count()
+        azmoon.save()
     context = {'azmoons':azmoons}
     return render(request, 'show_azmoon.html', context=context)
 
@@ -38,16 +40,22 @@ def add_azmoon(request):
             return render(request, 'add_azmoon.html' ,context=context)       
 
 def add_question(request,id):
-    azmoon = Azmoon.objects.all()
+    azmoon = Azmoon.objects.filter(id=id)
+    azmoon2 = Azmoon.objects.get(id=id)
     if request.method == "GET":
-        form = QuestionForm()
-        context = {'form': form,'id':id,'azmoon':azmoon}
-        return render(request, 'add_question.html', {'form': form})
+        form = QuestionForm2()
+        context = {'form': form,'id':id,'azmoon':azmoon2}
+        return render(request, 'add_question.html', context=context)
     if request.method == "POST":
-        form = QuestionForm(request.POST)
-        context = {'form': form,'id':id,'azmoon':azmoon}
-        if form.is_valid(): 
-            question = form.save()
+        form = QuestionForm2(request.POST)
+        context = {'form': form,'id':id,'azmoon':azmoon2}
+        if form.is_valid():
+            question = Question.objects.create()
+            question.Q_text = form.cleaned_data['Q_text']
+            question.Q_image = form.cleaned_data['Q_image']
+            question.type = form.cleaned_data['type']
+            question.azmoon.set(azmoon)
+            question.save()
             return render(request, 'add_question_2.html', context=context)  
         else:
             return render(request, 'add_question.html' ,context=context)   

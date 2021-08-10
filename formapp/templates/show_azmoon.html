@@ -612,10 +612,12 @@ aria-labelledby="usermenu" >
             <body>
                 {% for azmoon in azmoons %}
                     <h1><a href="{% url 'quest' azmoon.id %}">{{azmoon.name}}</a></h1>
+                    <h4>{{azmoon.Question_number}} سوال  </h4>
                     {% for part in azmoon.participant.all %}
                         <a href="{% url 'part' part.id %}">{{part.firstname}} {{part.lastname}}</a>
                         <br>
                     {% endfor %}
+                    <hr>
                 {% endfor %}   
                 <h1><a href="{% url 'add_azmoon'%}">اضافه کردن آزمون</a></h1> 
             </body>
