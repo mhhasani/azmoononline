@@ -6,6 +6,11 @@ class Participant(models.Model):
     firstname = models.CharField(max_length=200)
     lastname = models.CharField(max_length=200)
     mellicode = models.CharField(unique=True,max_length=10,validators=[MinLengthValidator(10)])
+    SEMAT_CHOICES = (
+        ('Ostad','Ostad'),
+        ('daneshamoz','daneshamoz'),
+    )
+    semat = models.CharField(max_length=200 ,choices=SEMAT_CHOICES ,default = 'daneshamoz')
     def __str__(self):
         return self.mellicode
 

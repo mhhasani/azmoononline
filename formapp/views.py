@@ -3,7 +3,13 @@ from .forms import *
 from .models import *
 
 def Home(request):
-    return render(request, 'Home.html')
+    azmoons = Azmoon.objects.all()
+    for azmoon in azmoons:
+        q = Question.objects.all().filter(azmoon__id=azmoon.id)
+        azmoon.Question_number = q.count()
+        azmoon.save()
+    context = {'azmoon':azmoons}
+    return render(request, 'Home.html',context=context)
     
 def show_participant(request,id):
     participant = Participant.objects.all().get(id=id)
@@ -17,12 +23,13 @@ def show_azmoon(request):
         q = Question.objects.all().filter(azmoon__id=azmoon.id)
         azmoon.Question_number = q.count()
         azmoon.save()
-    context = {'azmoons':azmoons}
+    context = {'azmoon':azmoons}
     return render(request, 'show_azmoon.html', context=context)
 
 def show_questions(request,id):
     questions = Question.objects.all()
-    context = {'questions':questions,'id':id}
+    azmoon = Azmoon.objects.get(id=id)
+    context = {'questions':questions,'id':id,'azmoon':azmoon}
     return render(request, 'show_question.html', context=context)
 
 def add_azmoon(request):

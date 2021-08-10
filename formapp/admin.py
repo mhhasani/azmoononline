@@ -19,6 +19,6 @@ class QuestionsAdmin(admin.ModelAdmin):
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ['id','firstname','lastname','mellicode']
+    list_display = ['id','firstname','lastname','mellicode','semat']
     inlines = [AzmoonInline]
 

@@ -4,14 +4,21 @@
     <meta charset="UTF-8">    
     <title>Index</title>
 </head>
-<body>
+<body dir = 'rtl'>
+    <h1> سوالات:</h1>
     {% for quest in questions %}
         {% for azmoon in quest.azmoon.all %}
             {% if azmoon.id == id %}
             <h1>{{quest.Q_text}}</h1>
             {%endif%}
         {% endfor %}
-    {% endfor %}    
+    {% endfor %} 
+      <hr>
+    <h1>شرکت کننده ها:</h1>
+    {% for part in azmoon.participant.all %}
+        <h2><a href="{% url 'part' part.id %}">{{part.firstname}} {{part.lastname}} ({{part.semat}})</a></h2>
+    {% endfor %} 
+    <hr>
     <h1><a href="{% url 'add_question' id %}">اضافه کردن سوال</a></h1> 
 </body>
 </html>
