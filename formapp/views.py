@@ -2,6 +2,7 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from .forms import *
 from .models import *
+from django.views.generic import CreateView
 
 def Home(request):
     return render(request, 'Home.html')
@@ -37,7 +38,7 @@ def add_azmoon(request):
             return render(request, 'add_azmoon.html' ,context=context)       
 
 def add_question(request,id):
-    azmoon = Azmoon.objects.all().get(id=id)
+    azmoon = Azmoon.objects.all()
     if request.method == "GET":
         form = QuestionForm()
         context = {'form': form,'id':id,'azmoon':azmoon}
