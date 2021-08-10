@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <meta charset="UTF-8">    
+    <title>Index</title>
+</head>
+<body>
+        <h1>{{participant.firstname}} {{participant.lastname}}</h1>
+        <h2>{{participant.mellicode}}</h2>
+        آزمون ها
+        {% for az in azmoon %}
+            <h3>{{az.name}}</h3>
+        {% endfor %}
+</body>
+</html>
