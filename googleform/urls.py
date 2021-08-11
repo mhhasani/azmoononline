@@ -1,9 +1,7 @@
-from formapp.views import add_question
-from formapp.views import add_azmoon
-from formapp.views import Home, show_participant,show_azmoon, show_questions
+from formapp.views import Home, show_participant,show_azmoon, show_questions,add_azmoon,add_question
 from django.contrib import admin 
 from django.urls import  path , include
-from django.views.generic.base import TemplateView # new
+from django.views.generic.base import TemplateView
 
 
 urlpatterns = [

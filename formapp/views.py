@@ -4,6 +4,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 
 class SignUpView(generic.CreateView):
     form_class = UserCreationForm
@@ -19,12 +20,14 @@ def Home(request):
     context = {'azmoon':azmoons}
     return render(request, 'Home.html',context=context)
     
+@login_required
 def show_participant(request,id):
     participant = Participant.objects.all().get(id=id)
     azmoon = Azmoon.objects.all().filter(participant__id = id)
     context = {'participant':participant , 'azmoon':azmoon}
     return render(request, 'show_participant.html', context=context)
 
+@login_required
 def show_azmoon(request):
     azmoons = Azmoon.objects.all()
     for azmoon in azmoons:
@@ -34,12 +37,14 @@ def show_azmoon(request):
     context = {'azmoon':azmoons}
     return render(request, 'show_azmoon.html', context=context)
 
+@login_required
 def show_questions(request,id):
     questions = Question.objects.all()
     azmoon = Azmoon.objects.get(id=id)
     context = {'questions':questions,'id':id,'azmoon':azmoon}
     return render(request, 'show_question.html', context=context)
 
+@login_required
 def add_azmoon(request):
     if request.method == "GET":
         form = AzmoonForm()
@@ -54,6 +59,7 @@ def add_azmoon(request):
         else:
             return render(request, 'add_azmoon.html' ,context=context)       
 
+@login_required
 def add_question(request,id):
     azmoon = Azmoon.objects.filter(id=id)
     azmoon2 = Azmoon.objects.get(id=id)
