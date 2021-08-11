@@ -16,7 +16,7 @@ class QuestionForm2(forms.Form):
     Q_text = CharField(widget=forms.Textarea,required=False)
     Q_image = forms.ImageField(required=False)
     TYPE_CHOICES = (
-        ('chand gozineh ee','chand gozineh ee'),
-        ('tashrihi','tashrihi'),
+        ('goz','chand gozineh ee'),
+        ('tash','tashrihi'),
     )
     type = forms.ChoiceField(choices=TYPE_CHOICES)
