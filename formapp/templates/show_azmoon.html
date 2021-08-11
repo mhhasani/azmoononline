@@ -1,23 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>    
-    <meta charset="UTF-8">    
-    <title>Index</title>
-</head>
-
-</html>
- -->
-
- <!-- <body>
-    {% for azmoon in azmoons %}
-        <h1><a href="{% url 'quest' azmoon.id %}">{{azmoon.name}}</a></h1>
-        {% for part in azmoon.participant.all %}
-            <a href="{% url 'part' part.id %}">{{part.mellicode}}</a>
-            <br>
-        {% endfor %}
-    {% endfor %}    
-</body> -->
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -123,9 +103,6 @@
     }
 </script>
 
-    
-
-    
 </head>
 
 <body dir="rtl" style="">
@@ -137,14 +114,6 @@
 
 
 <div class="pusher" id="qu-scroll">
-    
-        
-
-<link rel="stylesheet" href="https://static.quera.ir/qnav/global.0-2ade4df8e1dc.css"/><header id="qnav" class=" fixed"><div id="qnav__container"><div class="show-in-mobile" id="qnav__burger"></div><div id="qnav__logo" class="qnav-center"><a href="/"><img class="logo" id="logo" src="https://static.quera.ir/images/logo/logo-quera-heavy.0-1c1287ee3575.svg" alt="Quera"/></a></div><div id="qnav__rightmenu"><a class="active" href="/overview/">سامانه آموزشی</a><a class="" href="/college/">کالج</a><a class="" href="/problemset/contest">بانک سؤالات</a><a class="" href="/contest/">مسابقات</a><a class="" href="/magnet/jobs">مگنت (استخدام)</a></div><div style="flex: 1"></div><div id="qnav__leftmenu"></div></div></header><div id="qnav-placeholder"></div><script id="__qnav_data__" type="application/json">{"user": {"is_authenticated": true, "username": "mhhasnai", "full_name": "Mohammad Hosein hasani", "email": "hasanimohammadhosein@gmail.com", "avatar": "/media/CACHE/images/public/avatars/93bd3b71cd5c427194cdd64fbf195e33/98e7079323be4d61f33ff3e6cf132675.jpg", "is_employer": false}, "colleges": [{"id": 8241, "name": "آموزش گیت", "url": "/college/land/college/8241/"}, {"id": 6091, "name": "جنگو", "url": "/college/land/college/6091/"}], "events": [{"slug": "unidro", "name": "مسابقه تحلیل داده یونیدرو", "url": "/events/unidro/"}, {"slug": "snapp-shop-react", "name": "مسابقه Front-End/React - اسنپ شاپ", "url": "/events/snapp-shop-react/"}], "notifications": {"has_unread": true, "items": [{"id": 989310, "has_link": true, "deleted": false, "timestamp": "۱۹ مرداد ۱۴۰۰", "verb": "تغییر در وضعیت درخواست شما!", "description": "درخواست شما برای فرصت شغلی «Software Engineer (Back-end)» در وضعیت «دیده‌شده» قرار گرفت."}, {"id": 989278, "has_link": true, "deleted": false, "timestamp": "۱۹ مرداد ۱۴۰۰", "verb": "تغییر در وضعیت درخواست شما!", "description": "درخواست شما برای فرصت شغلی «CTO Python Django Developer» در وضعیت «دیده‌شده» قرار گرفت."}, {"id": 986315, "has_link": true, "deleted": false, "timestamp": "۱۲ مرداد ۱۴۰۰", "verb": "تغییر در وضعیت درخواست شما!", "description": "درخواست شما برای فرصت شغلی «برنامه‌نویس ++C» در وضعیت «ردشده» قرار گرفت."}, {"id": 986246, "has_link": true, "deleted": false, "timestamp": "۱۱ مرداد ۱۴۰۰", "verb": "تغییر در وضعیت درخواست شما!", "description": "درخواست شما برای فرصت شغلی «Senior Python/Django Developer» در وضعیت «ردشده» قرار گرفت."}, {"id": 986029, "has_link": true, "deleted": false, "timestamp": "۱۱ مرداد ۱۴۰۰", "verb": "تغییر در وضعیت درخواست شما!", "description": "درخواست شما برای فرصت شغلی «Back-end Developer (Django)» در وضعیت «ردشده» قرار گرفت."}]}}</script><script id="__qnav_urls__" type="application/json">{"talent_subdomain_base_url": "https://talent.quera.ir", "login": "/accounts/login", "logout": "/accounts/logout", "register": "/accounts/registration", "profile": "/profile/", "applied_jobs": "/careers/explore/jobs/applied", "pinned_jobs": "/careers/explore/jobs/pinned", "personal_settings": "/accounts/settings/personal", "dashboard": "/dashboard"}</script><script type="text/javascript" src="https://static.quera.ir/navbar/navbar.0-be58d5bde602.js"></script>
-
-        
-    
-    
         <nav class="ui borderless menu" id="nav-bar">
             <div class="ui  container">
                 <div class="breadcrumb item">
@@ -185,37 +154,16 @@
 
                 
     <div class="ui small secondary stackable menu ca-title">
-            <div class="ui large selection overview-archive-dropdown dropdown qu-dropdown">
-                <input type="hidden" name="active_page">
-                <i class="dropdown icon"></i>
-                <div class="text"><i class="large university icon"></i>آزمون های فعال من</div>
-                <div class="menu">
-                    <a href="/overview/" class="active selected item">
-                        <i class="large university icon"></i>
-                        آزمون های فعال من
-                    </a>
-                    <a href="/overview/archive" class="item">
-                        <i class="large archive icon"></i>
-                        آرشیو آزمون ها
-                    </a>
-                </div>
-            </div>
 
-        <div class="ui right secondary stackable menu">
+
+        <div class="ui left secondary stackable menu">
             
             <a class="item" href="{% url 'add_azmoon' %}">ایجاد آزمون جدید</a>
-            <a href="/overview/add_to_course" class="item">اضافه شدن به کلاس</a>
         </div>
     </div>
 
 
-                <div class="ui three stackable cards">
-                    
-
-
-
-                    
-
+                <div class="ui four stackable cards">
 
         {% for az in azmoon %}
             <a class="ui small link card course-card" href= "{% url 'quest' az.id %}">
@@ -226,31 +174,15 @@
                     <div class="header">{{az.name}}</div>
                 </div>
                 <div class="extra content">
-                    <div class="left floated">
-                        <i class="user icon"></i> {{az.Question_number}} سوال
-                        
-                    </div>
-                    <div class="right floated">پاییز ۰۰-۹۹</div>
+                        {{az.Question_number}} سوال
                 </div>
             </a>
         {%endfor%}
-    
-
-
                 </div>
-                
-    
-
             </div>
             <div class="four wide column">
                 <div>
-                    
-
-
-    
-
-    
-
+                
     
 
 <script>
@@ -278,350 +210,5 @@
             </div>
         </div>
     </div>
-    
-
     </div>
     
-        
-
-<style>
-    #footer {
-        background-color: white;
-        font-size: 13px;
-        padding: 1em 0;
-    }
-
-    #footer img {
-        display: block;
-    }
-
-    #footer > .container {
-        width: 100%;
-        max-width: 1160px;
-        margin: auto;
-        padding: 2em 1em;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    #footer .ft-logo {
-        text-align: center;
-        margin: 1em 3em 1em 4em;
-    }
-
-    #footer .ft-links {
-        display: flex;
-        flex-wrap: wrap;
-        flex: 2 1 auto;
-    }
-
-    #footer .ft-links .group {
-        display: flex;
-        flex-wrap: wrap;
-        flex: 1 0 auto;
-    }
-
-    #footer .ft-links .column {
-        flex: 1 0 auto;
-        padding: 1em;
-    }
-
-    #footer .ft-links .column .col-header {
-        color: #373737;
-        font-size: 15px;
-        font-weight: 500;
-        line-height: 1.6em;
-        margin: 0 0 0.8em;
-    }
-
-    @media only screen and (max-width: 500px) {
-        #footer .ft-links {
-            display: table;
-        }
-
-        #footer .ft-links .group {
-            display: table-row;
-        }
-
-        #footer .ft-links .column {
-            display: table-cell;
-        }
-    }
-
-    #footer .ft-links .links > .item {
-        display: block;
-        color: rgba(0, 0, 0, .5);
-        line-height: 2em;
-        white-space: nowrap;
-    }
-
-    #footer .ft-last {
-        margin: 1em 2em 0 3em;
-    }
-
-    #footer .ft-external {
-        display: flex;
-        justify-content: center;
-    }
-
-    #footer .ft-social {
-        display: flex;
-        justify-content: space-between;
-        margin: .6em 0 .1em;
-    }
-
-    #footer .ft-social svg {
-        display: block;
-        color: #989898;
-        font-size: 20px;
-        margin: 0;
-    }
-
-    #footer .ft-social i.icon:hover {
-        color: #09c !important;
-    }
-
-    #footer .ft-copyright {
-        color: #989898;
-        font-size: .9em;
-        text-align: justify;
-    }
-
-    #footer .ft-copyright:after {
-        content: "";
-        display: inline-block;
-        width: 100%;
-    }
-</style>
-
-<div style="border-bottom: 1px solid rgba(34,36,38,.15)"></div>
-
-<footer id="footer">
-    <div class="container">
-        <div class="ft-logo">
-            <a href="/">
-                <img width="81" height="100"
-                     src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                     alt="Quera"
-                     data-src="https://static.quera.ir/images/logo/logo.0-37f748b73943.svg"/>
-            </a>
-        </div>
-        <div class="ft-links">
-            <div class="group">
-                
-                    <div class="column">
-                        <div class="col-header">محصولات</div>
-                        <div class="links">
-                            <a href="/college/" class="item">آموزش برنامه‌نویسی</a>
-                            <a href="/magnet/jobs" class="item">آگهی‌های استخدام</a>
-                            <a href="/problemset/contest" class="item">
-                                سؤالات برنامه‌نویسی
-                            </a>
-                            <a href="/contest/" class="item">مسابقات</a>
-                            <a href="/overview/" class="item">کلاس‌ها</a>
-                            <a href="/employer/intro" class="item">پلتفرم استخدامی</a>
-                        </div>
-                    </div>
-                
-                
-                    <div class="column">
-                        <div class="col-header">منابع</div>
-                        <div class="links">
-                            <a target="_blank" rel="noopener" href="https://mag.quera.ir" class="item">
-                                کوئرامگ توسعه‌دهندگان
-                            </a>
-                            <a target="_blank" rel="noopener" href="https://virgool.io/quera-magazine" class="item">
-                                کوئرامگ شرکت‌ها
-                            </a>
-                            <a target="_blank" rel="noopener" href="https://quera.ir/blog/" class="item">
-                                اخبار مسابقات و دوره‌ها
-                            </a>
-                            <a rel="noopener" href="/magnet/calculator" class="item">
-                                ماشین‌حساب حقوق برنامه‌نویسان
-                            </a>
-                            <a target="_blank" rel="noopener"
-                               href="https://quera.ir/programming-stats/" class="item">
-                                آمار‌های دنیای برنامه‌نویسی
-                            </a>
-                            <a href="https://quera.ir/forms/xifMJX/" class="item">عضویت در خبرنامه</a>
-                        </div>
-                    </div>
-                
-            </div>
-            <div class="group">
-                
-                    <div class="column">
-                        <div class="col-header">رویداد‌ها</div>
-                        <div class="links">
-                            <a target="_blank" rel="noopener" href="/codeup-hackathon/" class="item">هکاتون
-                                کدآپ</a>
-                            <a target="_blank" rel="noopener" href="https://codecup.ir/" class="item">کدکاپ</a>
-                            
-                            <a target="_blank" rel="noopener" href="/traceway/"
-                               class="item">تریس‌وی</a>
-                            <a target="_blank" rel="noopener" href="/%D9%86%D9%85%D8%A7%DB%8C%D8%B4%DA%AF%D8%A7%D9%87-%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-%DA%A9%D8%A7%D8%B1%D8%A2%D9%85%D9%88%D8%B2%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A2%D9%85%D9%88%D8%B2%D8%B4%D9%88"
-                               class="item">کارآموزشو</a>
-                            <a target="_blank" rel="noopener" href="/talent/fair"
-                               class="item">Career Days</a>
-                        </div>
-                    </div>
-                
-                
-                    <div class="column">
-                        <div class="col-header">با کوئرا</div>
-                        <div class="links">
-                            <a href="/join" class="item">همکاری با ما</a>
-                            <a href="/contact" class="item">تماس با ما</a>
-                            <a href="/about" class="item">درباره ما</a>
-                            <a href="/terms" class="item">قوانین و مقررات</a>
-                            <a href="https://talent.quera.ir/employer/intro/contest"
-                               class="item">حمایت از مسابقات</a>
-                        </div>
-                    </div>
-                
-            </div>
-        </div>
-        <div class="ft-last">
-            <div class="ft-external">
-                
-                    <div style="cursor:pointer; margin: 0 -6px">
-                        <img width="86px" height="86px" id="oeuknbqesizpwlaonbqe"
-                             onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=82942&p=mcsiuiwkpfvlaodsuiwk", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")'
-                             alt="لوگوی ساماندهی" referrerpolicy="strict-origin"
-                             src="https://logo.samandehi.ir/logo.aspx?id=82942&p=aqgwodrfbsiyshwlodrf"/>
-                    </div>
-                
-                
-                    <a style="margin: 0 -6px 0 -2px"
-                       aria-label="مشاهده گواهی ای‌نماد"
-                       target="_blank"
-                       rel="noopener nofollow"
-                       referrerpolicy="strict-origin"
-                       href="https://trustseal.enamad.ir/?id=57607&Code=CW3qekxfHABBy5yr1YA3">
-                        <img width="80px"
-                             height="86px"
-                             src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                             data-src="https://trustseal.enamad.ir/logo.aspx?id=57607&Code=CW3qekxfHABBy5yr1YA3"
-                             alt="لوگوی ای‌نماد"
-                             id="CW3qekxfHABBy5yr1YA3"
-                             referrerpolicy="strict-origin">
-                    </a>
-                
-                <a aria-label="ورود به سایت پارس‌پک"
-                   target="_blank"
-                   rel="noopener"
-                   href="https://parspack.com?utm_source=quera&utm_medium=footer">
-                    <img width="55px" height="86px"
-                         alt="لوگوی پارس‌پک"
-                         title="کوئرا توسط سرورهای اختصاصی پارس پک پشتیبانی می‌شود."
-                         src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="
-                         data-src="https://static.quera.ir/images/parspack-vert.0-8d35cad5f532.png"/>
-                </a>
-            </div>
-            <div class="ft-social">
-                <a target="_blank"
-                   rel="noopener"
-                   href="https://github.com/QueraTeam"
-                   aria-label="ورود به گیت‌هاب کوئرا">
-                    <svg stroke="currentColor"
-                         fill="currentColor"
-                         stroke-width="0"
-                         viewBox="0 0 496 512"
-                         focusable="false"
-                         class="chakra-icon css-6ey7w3"
-                         height="1em"
-                         width="1em"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
-                    </svg>
-                </a>
-                <a target="_blank" rel="noopener" href="https://telegram.me/quera_ir" aria-label="ورود به تلگرام کوئرا">
-                    <svg stroke="currentColor"
-                         fill="currentColor"
-                         stroke-width="0"
-                         viewBox="0 0 448 512"
-                         focusable="false"
-                         class="chakra-icon css-6ey7w3"
-                         height="1em"
-                         width="1em"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M446.7 98.6l-67.6 318.8c-5.1 22.5-18.4 28.1-37.3 17.5l-103-75.9-49.7 47.8c-5.5 5.5-10.1 10.1-20.7 10.1l7.4-104.9 190.9-172.5c8.3-7.4-1.8-11.5-12.9-4.1L117.8 284 16.2 252.2c-22.1-6.9-22.5-22.1 4.6-32.7L418.2 66.4c18.4-6.9 34.5 4.1 28.5 32.2z"></path>
-                    </svg>
-                </a>
-                <a target="_blank" rel="noopener" href="https://twitter.com/quera_ir" aria-label="ورود به توییتر کوئرا">
-                    <svg stroke="currentColor"
-                         fill="currentColor"
-                         stroke-width="0"
-                         viewBox="0 0 512 512"
-                         focusable="false"
-                         class="chakra-icon css-6ey7w3"
-                         height="1em"
-                         width="1em"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path>
-                    </svg>
-                </a>
-                <a target="_blank"
-                   rel="noopener"
-                   href="https://instagram.com/quera.ir"
-                   aria-label="ورود به اینستاگرام کوئرا">
-                    <svg stroke="currentColor"
-                         fill="currentColor"
-                         stroke-width="0"
-                         viewBox="0 0 448 512"
-                         focusable="false"
-                         class="chakra-icon css-6ey7w3"
-                         height="1em"
-                         width="1em"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
-                    </svg>
-                </a>
-                <a target="_blank"
-                   rel="noopener"
-                   href="https://www.linkedin.com/company/quera"
-                   aria-label="ورود به لینکداین کوئرا">
-                    <svg stroke="currentColor"
-                         fill="currentColor"
-                         stroke-width="0"
-                         viewBox="0 0 448 512"
-                         focusable="false"
-                         class="chakra-icon css-6ey7w3"
-                         height="1em"
-                         width="1em"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
-                    </svg>
-                </a>
-            </div>
-            <div class="ft-copyright">
-                ساخته‌شده با افتخار در ایران
-                | ۱۳۹۴ - ۱۴۰۰
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const imgDefer = document.getElementsByTagName("img");
-        for (let i = 0; i < imgDefer.length; i++) {
-            if (imgDefer[i].getAttribute("data-src")) {
-                imgDefer[i].setAttribute("src", imgDefer[i].getAttribute("data-src"));
-            }
-        }
-    });
-</script>
-
-    
-</div>
-
-<script type="text/javascript" src="https://static.quera.ir/js/quera_timer.0-cfcac0b85e9a.js"></script>
-
-</body>
-</html>
-
-
-
-

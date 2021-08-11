@@ -2,15 +2,16 @@
 
 {% block title %}Home{% endblock %}
 
+<body>
 {% block content %}
 {% if user.is_authenticated %}
-  <h1>Hi {{ user.username }}!</h1>
-  <h1><a href="{% url 'azmoon' %}">آزمون ها</a></h1>
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+  <a href="{% url 'logout' %}">خروج</a>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a> 
-  <br>
-  <a href="{% url 'signup' %}">Sign Up</a>
+  <a href="{% url 'login' %}">ورود</a> 
+  <i class="left angle icon divider"></i>
+  <a href="{% url 'signup' %}">ثبت نام</a>
 {% endif %}
+
 {% endblock %}
+</body>
+
