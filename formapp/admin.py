@@ -1,11 +1,13 @@
 from django.contrib import admin,messages
 from .models import *
-
-class QuestionInline(admin.StackedInline):
-    model = Question.azmoon.through
+from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
+from .models import Participant
 
 class AzmoonInline(admin.TabularInline):
     model = Azmoon.participant.through
+
+class QuestionInline(admin.StackedInline):
+    model = Question.azmoon.through
 
 @admin.register(Azmoon)
 class AzmoonAdmin(admin.ModelAdmin):
@@ -19,6 +21,6 @@ class QuestionsAdmin(admin.ModelAdmin):
 
 @admin.register(Participant)
 class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ['id','firstname','lastname','mellicode','semat']
+    list_display = ['id','user','firstname','lastname','mellicode','semat']
     inlines = [AzmoonInline]
 

@@ -1,24 +1,28 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from .forms import *
 from .models import *
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import redirect
 
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'registration/signup.html'
+@csrf_exempt
+def signup(request):
+    if request.method == 'GET':
+        form = SignUpForm()
+        context = {'form': form}
+        return render(request, 'registration/signup.html', context=context)
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+        return HttpResponse(f"{form.errors}") 
 
 def Home(request):
-    azmoons = Azmoon.objects.all()
-    for azmoon in azmoons:
-        q = Question.objects.all().filter(azmoon__id=azmoon.id)
-        azmoon.Question_number = q.count()
-        azmoon.save()
-    context = {'azmoon':azmoons}
-    return render(request, 'Home.html',context=context)
+    return render(request, 'Home.html')
     
 @login_required
 def show_participant(request,id):
@@ -41,7 +45,8 @@ def show_azmoon(request):
 def show_questions(request,id):
     questions = Question.objects.all()
     azmoon = Azmoon.objects.get(id=id)
-    context = {'questions':questions,'id':id,'azmoon':azmoon}
+    user = User.objects.all()
+    context = {'questions':questions,'id':id,'azmoon':azmoon,'user':user}
     return render(request, 'show_question.html', context=context)
 
 @login_required
