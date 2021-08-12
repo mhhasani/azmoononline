@@ -1,24 +1,59 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}Participant{% endblock %}
+
+<body>
+{% block content %}
+{% if user.is_authenticated %}
+  <a href="{% url 'logout' %}">خروج</a>
+{% else %}
+  <a href="{% url 'login' %}">ورود</a> 
+  <i class="left angle icon divider"></i>
+  <a href="{% url 'signup' %}">ثبت نام</a>
+{% endif %}
+{% endblock %}
+
+{% block main%} 
 <html lang="en">
 <head>    
     <meta charset="UTF-8">    
     <title>Index</title>
 </head>
+<div id="body_container">
+        
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="twelve wide column">
+
+                
+    <div class="ui small secondary stackable menu ca-title">
+
+
+        <div class="ui left secondary stackable menu">
+            
+            <a class="item" href="{% url 'add_question' id %}">اضافه کردن سوال</a>
+        </div>
+    </div>
 <body dir = 'rtl'>
     <h1> سوالات:</h1>
+    <br>
     {% for quest in questions %}
         {% for azmoon in quest.azmoon.all %}
             {% if azmoon.id == id %}
-            <h1>{{quest.Q_text}}</h1>
+                <h1>{{quest.Q_text}}</h1>
+                <img src="{{quest.Q_image}}" alt="{{quest.Q_image}}"> <br>
+                <input type="radio" name="answer" id="answer">{{quest.answer1}}<br>
+                <input type="radio" name="answer" id="answer">{{quest.answer2}}<br>
+                <input type="radio" name="answer" id="answer">{{quest.answer3}}<br>
+                <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
+                <h5><hr></h5>
             {%endif%}
         {% endfor %}
     {% endfor %} 
-      <hr>
     <h1>شرکت کننده ها:</h1>
     {% for part in azmoon.participant.all %}
         <h2><a href="{% url 'part' part.id %}">{{part.user.first_name}} {{part.user.last_name}} ({{part.semat}})</a></h2>
     {% endfor %} 
-    <hr>
-    <h1><a href="{% url 'add_question' id %}">اضافه کردن سوال</a></h1> 
 </body>
 </html>
+{% endblock %}

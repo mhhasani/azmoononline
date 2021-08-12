@@ -28,7 +28,7 @@ def Home(request):
 def show_participant(request,id):
     participant = Participant.objects.all().get(id=id)
     azmoon = Azmoon.objects.all().filter(participant__id = id)
-    context = {'participant':participant , 'azmoon':azmoon}
+    context = {'participant':participant , 'azmoon':azmoon , 'id':id}
     return render(request, 'show_participant.html', context=context)
 
 @login_required
@@ -60,7 +60,7 @@ def add_azmoon(request):
         context = {'azmoons':azmoons,'form': form}
         if form.is_valid():
             azmoon = form.save()  
-            return render(request, 'add_azmoon_2.html', context=context)  
+            return redirect('azmoon')
         else:
             return render(request, 'add_azmoon.html' ,context=context)       
 
@@ -79,9 +79,13 @@ def add_question(request,id):
             question = Question.objects.create()
             question.Q_text = form.cleaned_data['Q_text']
             question.Q_image = form.cleaned_data['Q_image']
-            question.type = form.cleaned_data['type']
+            question.answer1 = form.cleaned_data['answer1']
+            question.answer2 = form.cleaned_data['answer2']
+            question.answer3 = form.cleaned_data['answer3']
+            question.answer4 = form.cleaned_data['answer4']
+            question.correct_answer = form.cleaned_data['correct_answer']
             question.azmoon.set(azmoon)
             question.save()
-            return render(request, 'add_question_2.html', context=context)  
+            return redirect('quest',id)
         else:
             return render(request, 'add_question.html' ,context=context)   

@@ -16,7 +16,7 @@ class AzmoonAdmin(admin.ModelAdmin):
 
 @admin.register(Question)
 class QuestionsAdmin(admin.ModelAdmin):
-    list_display = ['id','type']
+    list_display = ['id','correct_answer']
     inlines = [QuestionInline]
 
 @admin.register(Participant)

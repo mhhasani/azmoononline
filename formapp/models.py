@@ -1,8 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
-from django.db.models.deletion import CASCADE
 from django.db.models.fields.related import ManyToManyField
-from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import User
 
 class Participant(models.Model):
@@ -30,16 +28,24 @@ class Azmoon(models.Model):
 
 class Question(models.Model):
     azmoon = models.ManyToManyField(Azmoon,blank=True)
-    Q_text = models.TextField(blank=True)
+    Q_text = models.TextField()
     Q_image = models.ImageField(blank=True)
     TYPE_CHOICES = (
         ('goz','chand gozineh ee'),
         ('tash','tashrihi'),
     )
-    type = models.CharField(choices=TYPE_CHOICES , max_length=20,blank=True,null=True)
-    def set_azmoon(self,id):
-        self.azmoon__id = id
-        self.save()
-        return id
+    ANSWER_CJOICES = (
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+    )
+    answer1 = models.CharField(max_length=200,null = True, default="گزینه 1")
+    answer2 = models.CharField(max_length=200,null = True, default="گزینه 2")
+    answer3 = models.CharField(max_length=200,null = True, default="گزینه 3")
+    answer4 = models.CharField(max_length=200,null = True, default="گزینه 4")
+
+    correct_answer = models.CharField(max_length=1,choices=ANSWER_CJOICES,null = True)
+
     def __str__(self):
         return "Question " + str(self.id)

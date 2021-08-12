@@ -1,150 +1,19 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <title>کلاس‌ها | Quera</title>
-    <meta name="description"
-          content="از آموزش و تمرین برنامه‌نویسی تا رقابت و استخدام در بهترین شرکت‌ها! در Quera، بزرگترین جامعه‌ی توسعه‌دهندگان ایرانی">
+{% extends 'base.html' %}
 
-    <meta content="text/html" charset="UTF-8">
-    <meta name="fontiran.com:license" content="56AXFY">
-    
-        <meta name="viewport" content="width=1200"/>
-    
-    <meta property="og:site_name" content="Quera"/>
-    
-        <meta property="og:title" content="Quera"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:image"
-              content="https://static.quera.ir/images/logo/logo-q.0-191a914662ba.png"/>
-        
-    
-    
-        
-        <link rel="apple-touch-icon" sizes="180x180" href="https://static.quera.ir/images/logo/favicon/apple-touch-icon.0-2887f2aad086.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="https://static.quera.ir/images/logo/favicon/favicon-32x32.0-b5be5ba884c5.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="https://static.quera.ir/images/logo/favicon/favicon-16x16.0-4bcbe4f363d7.png">
-        <link rel="manifest" href="https://static.quera.ir/images/logo/favicon/site.0-a58f0dbbf828.webmanifest">
-        <link rel="mask-icon" href="https://static.quera.ir/images/logo/favicon/safari-pinned-tab.0-c497e3a2ff0f.svg" color="#5bbad5">
-        <link rel="shortcut icon" href="https://static.quera.ir/images/logo/favicon/favicon.0-53ba381ba55d.ico">
-        <meta name="apple-mobile-web-app-title" content="Quera">
-        <meta name="application-name" content="Quera">
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="msapplication-config" content="https://static.quera.ir/images/logo/favicon/browserconfig.0-158c579223ae.xml">
-        <meta name="theme-color" content="#09c">
-    
-    
+{% block title %}Participant{% endblock %}
 
+<body>
+{% block content %}
+{% if user.is_authenticated %}
+  <a href="{% url 'logout' %}">خروج</a>
+{% else %}
+  <a href="{% url 'login' %}">ورود</a> 
+  <i class="left angle icon divider"></i>
+  <a href="{% url 'signup' %}">ثبت نام</a>
+{% endif %}
+{% endblock %}
 
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TDRQP6V');</script>
-
-
-    <script type="text/javascript" src="https://static.quera.ir/js/reverse.0-6647d16609ac.js"></script>
-    <link rel="stylesheet" href="https://static.quera.ir/vendor/jquery-ui/themes/flick/jquery-ui.min.0-e43e763e0745.css"/>
-    <script type="text/javascript" src="https://static.quera.ir/vendor_common/common.min.0-ff5d1031dabd.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://static.quera.ir/vendor_common/common.min.0-c21277d78369.css"/>
-    <link rel="stylesheet" type="text/css" href="https://static.quera.ir/vendor/semantic/semantic.rtl.min.0-d12cdace827d.css"/>
-    <link rel="stylesheet" type="text/css" href="https://static.quera.ir/css/style.0-77ea887e2f27.css"/>
-    <link rel="stylesheet" type="text/css" href="https://static.quera.ir/semanticui/style.0-b3ef4156e542.css"/>
-    <link rel="preload" href="https://static.quera.ir/fonts/iranyekan/fonts/woff2/IRANYekanWebRegular.0-9b47f3164ee9.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://static.quera.ir/fonts/iranyekan/fonts/woff2/IRANYekanWebBold.0-980f51e04b7c.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://static.quera.ir/fonts/iranyekan/fonts/woff2/IRANYekanWebLight.0-1a7cfbfeabaf.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://static.quera.ir/fonts/iranyekan/fonts/woff2/IRANYekanWebMedium.0-3c3b4ec2f970.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://static.quera.ir/vendor/semantic/themes/default/assets/fonts/icons.0-0ab54153eeec.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" href="https://static.quera.ir/vendor/semantic/themes/default/assets/fonts/brand-icons.0-e8c322de9658.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-    <script type="text/javascript" src="https://static.quera.ir/js/main.0-ef7ccb650ad2.js"></script>
-    <script type="text/javascript" src="https://static.quera.ir/js/notebook.0-189713f46774.js"></script>
-    <script type="text/javascript" src="https://static.quera.ir/js/markdown-moratab.0-7d960c3b110e.js"></script>
-    <script src="https://static.quera.ir/vendor/clipboard/clipboard.min.0-f06c52bfddb4.js" type="text/javascript"></script>
-    <script src="https://static.quera.ir/vendor/prism/prism.min.0-683a0944f523.js" data-manual></script>
-    <link rel="stylesheet" type="text/css" href="https://static.quera.ir/vendor/prism/prism.0-4fa8005e6de1.css">
-    <script src="https://static.quera.ir/notifications/notify.0-adeb6bd4d98d.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://static.quera.ir/vendor/katex/katex.min.0-f624f07ae925.css"/>
-    
-    
-        <script>
-    const amplitudeApiKey = "ad324f3bb41b4d895c353238cfecb4e9" || null;
-    const amplitudeVisitorID = "MTI0ODk3MTI0ODk3MTI0OKBDkMQ6Gn/kKDkWgs8EMUw=" || null;
-    // console.log("***", {amplitudeApiKey, amplitudeVisitorID});
-    if (amplitudeApiKey && amplitudeVisitorID) {
-        (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};
-        var r=t.createElement("script")
-        ;r.type="text/javascript"
-        ;r.integrity="sha384-xwN6OCSgIf1SF9jtD6pouaSwCvpobyV3lanBGQ1d33MwTxLarbQxUif0Slt0npCM"
-        ;r.crossOrigin="anonymous";r.async=true
-        ;r.src="https://cdn.amplitude.com/libs/amplitude-8.3.0-min.gz.js"
-        ;r.onload=function(){if(!e.amplitude.runQueuedFunctions){
-        console.log("[Amplitude] Error: could not load SDK")}}
-        ;var i=t.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)
-        ;function s(e,t){e.prototype[t]=function(){
-        this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));return this}}
-        var o=function(){this._q=[];return this}
-        ;var a=["add","append","clearAll","prepend","set","setOnce","unset","preInsert","postInsert","remove"]
-        ;for(var c=0;c<a.length;c++){s(o,a[c])}n.Identify=o;var u=function(){this._q=[]
-        ;return this}
-        ;var l=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"]
-        ;for(var p=0;p<l.length;p++){s(u,l[p])}n.Revenue=u
-        ;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","enableTracking","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","groupIdentify","onInit","logEventWithTimestamp","logEventWithGroups","setSessionId","resetSessionId"]
-        ;function v(e){function t(t){e[t]=function(){
-        e._q.push([t].concat(Array.prototype.slice.call(arguments,0)))}}
-        for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){
-        e=(!e||e.length===0?"$default_instance":e).toLowerCase()
-        ;if(!Object.prototype.hasOwnProperty.call(n._iq,e)){n._iq[e]={_q:[]};v(n._iq[e])
-        }return n._iq[e]};e.amplitude=n})(window,document);
-
-        amplitude.getInstance().init(amplitudeApiKey, amplitudeVisitorID);
-
-        // === log event example ===
-        // var event = "Button Clicked";
-        // var eventProperties = {
-        //     "hover time": "100ms"
-        // };
-        // amplitude.getInstance().logEvent(event, eventProperties);
-
-    }
-</script>
-
-</head>
-
-<body dir="rtl" style="">
-
-
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDRQP6V" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-
-
-
-<div class="pusher" id="qu-scroll">
-        <nav class="ui borderless menu" id="nav-bar">
-            <div class="ui  container">
-                <div class="breadcrumb item">
-                    
-    
-                        <a href="{% url 'Home' %}" class="section">خانه</a>
-                    
-    <i class="left angle icon divider"></i>
-    <a href="{% url 'azmoon' %}" class="section">آزمون ها</a>
-
-                </div>
-                
-            </div>
-        </nav>
-    
-    <div dir="ltr" id="qu-hj"></div>
-
-    <script type="text/javascript" charset="utf-8">
-        quera = {};
-        quera.finish_time = moment('0');
-        quera.extra_time = moment.duration(0, 'seconds');
-        quera.server_first_time = '2021-08-10T22:12:35.633665+04:30';
-        quera.offset = moment('2021-08-10T22:12:35.633811+04:30').diff(moment());
-        quera.time = moment();
-        quera.times = [];
-        
-    </script>
-    
-        <script>
-            
-        </script>
+{% block main%} 
     
     <div id="body_container">
         
@@ -212,3 +81,4 @@
     </div>
     </div>
     
+{% endblock %}

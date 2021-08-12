@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.forms.fields import CharField
+from django.forms.fields import CharField, ChoiceField
 from .models import *
 from django import forms
 from django.core.validators import MinLengthValidator
@@ -56,13 +56,19 @@ class AzmoonForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('Q_text', 'Q_image','type')
+        fields = ('Q_text', 'Q_image')
 
 class QuestionForm2(forms.Form):
-    Q_text = CharField(widget=forms.Textarea,required=False)
+    Q_text = forms.CharField(widget=forms.Textarea,required=True)
     Q_image = forms.ImageField(required=False)
-    TYPE_CHOICES = (
-        ('goz','chand gozineh ee'),
-        ('tash','tashrihi'),
+    answer1 = forms.CharField(initial="گزینه 1",required=False)
+    answer2 = forms.CharField(initial="گزینه 2",required=False)
+    answer3 = forms.CharField(initial="گزینه 3",required=False)
+    answer4 = forms.CharField(initial="گزینه 4",required=False)
+    ANSWER_CJOICES = (
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
     )
-    type = forms.ChoiceField(choices=TYPE_CHOICES)
+    correct_answer = ChoiceField(choices=ANSWER_CJOICES)
