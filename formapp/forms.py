@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.forms.fields import CharField, ChoiceField
+from django.forms.fields import ChoiceField
 from .models import *
 from django import forms
 from django.core.validators import MinLengthValidator
