@@ -68,11 +68,11 @@ def add_question(request,id):
     azmoon = Azmoon.objects.filter(id=id)
     azmoon2 = Azmoon.objects.get(id=id)
     if request.method == "GET":
-        form = QuestionForm2()
+        form = QuestionForm()
         context = {'form': form,'id':id,'azmoon':azmoon2}
         return render(request, 'add_question.html', context=context)
     if request.method == "POST":
-        form = QuestionForm2(request.POST)
+        form = QuestionForm(request.POST)
         context = {'form': form,'id':id,'azmoon':azmoon2}
         if form.is_valid():
             question = Question.objects.create()

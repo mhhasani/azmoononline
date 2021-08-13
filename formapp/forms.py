@@ -53,12 +53,7 @@ class AzmoonForm(forms.ModelForm):
         model = Azmoon
         fields = ('name', 'start_time','end_time')
 
-class QuestionForm(forms.ModelForm):
-    class Meta:
-        model = Question
-        fields = ('Q_text', 'Q_image')
-
-class QuestionForm2(forms.Form):
+class QuestionForm(forms.Form):
     Q_text = forms.CharField(widget=forms.Textarea,required=True)
     Q_image = forms.ImageField(required=False)
     answer1 = forms.CharField(initial="گزینه 1",required=False)
