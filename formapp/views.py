@@ -47,7 +47,7 @@ def show_questions(request,id):
     user = User.objects.all()
     context = {'questions':questions,'id':id,'azmoon':azmoon,'user':user}
     return render(request, 'show_question.html', context=context)
-
+    
 @login_required
 def add_azmoon(request):
     if request.method == "GET":
@@ -88,3 +88,40 @@ def add_question(request,id):
             return redirect('quest',id)
         else:
             return render(request, 'add_question.html' ,context=context)   
+
+@login_required
+def edit_question(request,q_id,a_id):
+    azmoon = Azmoon.objects.all().get(id=a_id)
+    question = Question.objects.all().get(id=q_id)
+    if request.method == "GET":
+        form = QuestionForm(
+            initial = 
+            {
+                # 'azmoon' : question.azmoon,
+                'Q_text' : question.Q_text,
+                'Q_image' : question.Q_image,
+                'answer1' : question.answer1,
+                'answer2' : question.answer2,
+                'answer3' : question.answer3,
+                'answer4' : question.answer4,
+                'correct_answer' : question.correct_answer
+            }
+        )
+        context = {'form': form,'id':q_id,'azmoon':azmoon}
+        return render(request, 'edit_question.html', context=context)
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        context = {'form': form,'id':q_id,'azmoon':azmoon}
+        if form.is_valid():
+            question.Q_text = form.cleaned_data['Q_text']
+            question.Q_image = form.cleaned_data['Q_image']
+            question.answer1 = form.cleaned_data['answer1']
+            question.answer2 = form.cleaned_data['answer2']
+            question.answer3 = form.cleaned_data['answer3']
+            question.answer4 = form.cleaned_data['answer4']
+            question.correct_answer = form.cleaned_data['correct_answer']
+            # question.azmoon.set(form.cleaned_data['azmoon'])
+            question.save()
+            return redirect('quest',a_id)
+        else:
+            return render(request, 'edit_question.html' ,context=context) 

@@ -1,5 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.fields import ChoiceField
+from django.forms.models import ModelMultipleChoiceField
 from .models import *
 from django import forms
 from django.core.validators import MinLengthValidator
@@ -54,6 +55,7 @@ class AzmoonForm(forms.ModelForm):
         fields = ('name', 'start_time','end_time')
 
 class QuestionForm(forms.Form):
+    # azmoon = ModelMultipleChoiceField(Azmoon.objects,required=False)
     Q_text = forms.CharField(widget=forms.Textarea,required=True)
     Q_image = forms.ImageField(required=False)
     answer1 = forms.CharField(initial="گزینه 1",required=False)
