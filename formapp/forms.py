@@ -49,11 +49,17 @@ class SignUpForm(UserCreationForm):
             )
         return user
 
-class AzmoonForm(forms.ModelForm):
-    class Meta:
-        model = Azmoon
-        fields = ('name', 'start_time','end_time')
+class AzmoonForm2(forms.Form):
+    participant = ModelMultipleChoiceField(Participant.objects,required=False)
+    name = forms.CharField()
+    start_time = forms.DateTimeField(required=False)
+    end_time = forms.DateTimeField(required=False)
 
+# class AzmoonForm(forms.ModelForm):
+#     class Meta:
+#         model = Azmoon
+#         fields = ('name', 'start_time','end_time')
+        
 class QuestionForm(forms.Form):
     # azmoon = ModelMultipleChoiceField(Azmoon.objects,required=False)
     Q_text = forms.CharField(widget=forms.Textarea,required=True)

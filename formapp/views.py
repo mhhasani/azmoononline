@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
+from openpyxl import Workbook
 
 @csrf_exempt
 def signup(request):
@@ -44,25 +45,55 @@ def show_azmoon(request):
 def show_questions(request,id):
     questions = Question.objects.all()
     azmoon = Azmoon.objects.get(id=id)
-    user = User.objects.all()
+    user = Participant.objects.all()
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Data"
+    ws.append(['id','firstname','lastname','phone_number','mellicode','semat'])
+    # for u in user:
+    #     ws.append([u.id,u.firstname,u.lastname,u.phone_number,u.mellicode])
+    for part in azmoon.participant.all():
+        ws.append([part.id,part.firstname,part.lastname,part.phone_number,part.mellicode,part.semat])
+    wb.save(f"azmoon_{id}_participant.xlsx")
     context = {'questions':questions,'id':id,'azmoon':azmoon,'user':user}
     return render(request, 'show_question.html', context=context)
+
     
+# @login_required
+# def add_azmoon(request):
+#     if request.method == "GET":
+#         form = AzmoonForm()
+#         return render(request, 'add_azmoon.html', {'form': form})
+#     if request.method == "POST":
+#         form = AzmoonForm(request.POST)
+#         azmoons = Azmoon.objects.all()
+#         context = {'azmoons':azmoons,'form': form}
+#         if form.is_valid():
+#             azmoon = form.save()  
+#             return redirect('azmoon')
+#         else:
+#             return render(request, 'add_azmoon.html' ,context=context)       
+
 @login_required
-def add_azmoon(request):
+def add_azmoon2(request):
     if request.method == "GET":
-        form = AzmoonForm()
+        form = AzmoonForm2()
         return render(request, 'add_azmoon.html', {'form': form})
     if request.method == "POST":
-        form = AzmoonForm(request.POST)
+        form = AzmoonForm2(request.POST)
         azmoons = Azmoon.objects.all()
         context = {'azmoons':azmoons,'form': form}
         if form.is_valid():
-            azmoon = form.save()  
+            azmoon = Azmoon.objects.create() 
+            azmoon.participant.set(form.cleaned_data['participant'])
+            azmoon.name = form.cleaned_data['name']                       
+            azmoon.start_time = form.cleaned_data['start_time']                       
+            azmoon.end_time = form.cleaned_data['end_time'] 
+            azmoon.save()                      
             return redirect('azmoon')
         else:
-            return render(request, 'add_azmoon.html' ,context=context)       
-
+            return render(request, 'add_azmoon.html' ,context=context) 
+            
 @login_required
 def add_question(request,id):
     azmoon = Azmoon.objects.filter(id=id)
