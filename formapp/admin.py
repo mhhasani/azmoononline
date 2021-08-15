@@ -20,7 +20,46 @@ class QuestionsAdmin(admin.ModelAdmin):
     inlines = [QuestionInline]
 
 @admin.register(Participant)
-class ParticipantAdmin(admin.ModelAdmin):
-    list_display = ['id','user','firstname','lastname','mellicode','semat']
+class ParticipantAdmin(DefaultUserAdmin):
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {
+            'fields': (
+                'first_name',
+                'last_name',
+                'email',
+                'phone_number',
+                'mellicode',
+                'semat',
+            )
+        }),
+        ('Permissions', {
+            'fields': (
+                'is_active',
+                'is_staff',
+                'is_superuser',
+                'groups',
+                'user_permissions'
+            ),
+        }),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+
+    list_display = (
+        'username',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'is_staff',
+        'semat',
+    )
+
+    search_fields = (
+        'username',
+        'first_name',
+        'last_name',
+        'phone_number',
+        'email',
+    )    
     inlines = [AzmoonInline]
 

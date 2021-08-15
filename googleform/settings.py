@@ -123,5 +123,5 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'azmoon'
 LOGOUT_REDIRECT_URL = 'Home' 
-# AUTH_USER_MODEL = 'formapp.Participant'
+AUTH_USER_MODEL = 'formapp.Participant'
 

@@ -3,10 +3,11 @@ from django.shortcuts import render
 from .forms import *
 from .models import *
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from openpyxl import Workbook
+
 
 @csrf_exempt
 def signup(request):
@@ -23,7 +24,12 @@ def signup(request):
 
 def Home(request):
     return render(request, 'Home.html')
-    
+
+def check_semat(user):
+    if user.semat=="Ostad":
+        return True
+
+# @user_passes_test(check_semat)
 @login_required
 def show_participant(request,id):
     participant = Participant.objects.all().get(id=id)
@@ -53,7 +59,7 @@ def show_questions(request,id):
     # for u in user:
     #     ws.append([u.id,u.firstname,u.lastname,u.phone_number,u.mellicode])
     for part in azmoon.participant.all():
-        ws.append([part.id,part.firstname,part.lastname,part.phone_number,part.mellicode,part.semat])
+        ws.append([part.id,part.first_name,part.last_name,part.phone_number,part.mellicode,part.semat])
     wb.save(f"azmoon_{id}_participant.xlsx")
     context = {'questions':questions,'id':id,'azmoon':azmoon,'user':user}
     return render(request, 'show_question.html', context=context)
@@ -74,6 +80,7 @@ def show_questions(request,id):
 #         else:
 #             return render(request, 'add_azmoon.html' ,context=context)       
 
+# @user_passes_test(check_semat)
 @login_required
 def add_azmoon2(request):
     if request.method == "GET":
