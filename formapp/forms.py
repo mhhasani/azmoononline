@@ -10,13 +10,29 @@ from django.core.validators import MinLengthValidator
 #         model = Participant
 #         fields = ('__all__')
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Participant
+        fields = ('username','first_name','last_name','phone_number','mellicode')
+    # def clean(self):
+    #     cd = self.cleaned_data
+    #     u = Participant.objects.all()
+    #     for part in u:
+    #         if part.username == cd.get('username'):
+    #             self.add_error('username', "username is requiered !")     
+    #         if part.phone_number == cd.get('phone_number'):
+    #             self.add_error('phone_number', "phone number is requiered !")
+    #         if part.mellicode == cd.get('mellicode'):
+    #             self.add_error('mellicode', "melli code is requiered !")
+    #     return cd
+
 class SignUpForm(UserCreationForm):
     class Meta:
         # from django.contrib.auth import get_user_model
         # User = get_user_model()
         # model = User
         model = Participant
-        fields = ('username','first_name','last_name','phone_number','mellicode','semat','password1', 'password2')
+        fields = ('username','first_name','last_name','phone_number','mellicode','password1', 'password2')
 
     def clean(self):
         cd = self.cleaned_data

@@ -110,9 +110,17 @@
       <i class="left angle icon divider"></i>
       <a href="{% url 'azmoon' %}" class="section">آزمون ها</a>
       <i class="left angle icon divider"></i>
-        {% block content %}
-        {% endblock %}
-
+      <div dir="ltr">
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">خروج</a>
+        <i class="left angle icon divider"></i>
+        <a href="{% url 'Profile'%}">پروفایل</a>
+      {% else %}
+        <a href="{% url 'login' %}">ورود</a> 
+        <i class="left angle icon divider"></i>
+        <a href="{% url 'signup' %}">ثبت نام</a>
+      {% endif %}
+      </div>
 
                   </div>
               </div>

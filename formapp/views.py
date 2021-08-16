@@ -17,13 +17,44 @@ def signup(request):
         return render(request, 'registration/signup.html', context=context)
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        context = {'form': form}
         if form.is_valid():
             form.save()
             return redirect('login')
-        return HttpResponse(f"{form.errors}") 
+        return render(request, 'registration/signup.html', context=context)
 
 def Home(request):
     return render(request, 'Home.html')
+
+def Profile(request):
+    participant = request.user
+    if request.method == "GET":
+        form = ProfileForm(
+            initial = 
+            {
+                'username' : participant.username,
+                'first_name' : participant.first_name,
+                'last_name' : participant.last_name,
+                'phone_number' : participant.phone_number,
+                'mellicode' : participant.mellicode,
+                'semat' : participant.semat,
+            }
+        )
+        context = {'form': form,'participant':participant}
+        return render(request, 'registration/Profile.html', context=context)
+    if request.method == "POST":
+        form = ProfileForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            participant.username = form.cleaned_data['username']
+            participant.first_name = form.cleaned_data['first_name']
+            participant.last_name = form.cleaned_data['last_name']
+            participant.phone_number = form.cleaned_data['phone_number']
+            participant.mellicode = form.cleaned_data['mellicode']
+            participant.save()
+            return redirect('Home')
+        else:
+            return render(request, 'registration/Profile.html',context=context) 
 
 def check_semat(user):
     if user.semat=="Ostad":
@@ -51,15 +82,24 @@ def show_azmoon(request):
 def show_questions(request,id):
     question = Question.objects.all().filter(azmoon__id=id).values()
     participant = Participant.objects.all().filter(azmoon__id=id).values()
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "Data"
-    ws.append(['id','firstname','lastname','phone_number','mellicode','semat'])
-    for part in participant:
-        ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode'],part['semat']])
-    wb.save(f"azmoon_{id}_participant.xlsx")
-    context = {'questions':question,'id':id,'participant':participant}
-    return render(request, 'show_question.html', context=context)
+    azmoons = Azmoon.objects.all() 
+    check_in_azmoon = False
+    for azmoon in request.user.azmoon.all():
+        if azmoon.id == id:
+            check_in_azmoon = True
+            break
+    if check_in_azmoon:
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Data"
+        ws.append(['id','firstname','lastname','phone_number','mellicode','semat'])
+        for part in participant:
+            ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode'],part['semat']])
+        wb.save(f"azmoon_{id}_participant.xlsx")
+        context = {'questions':question,'id':id,'participant':participant}
+        return render(request, 'show_question.html', context=context)
+    else:
+        return HttpResponse("آزمون یافت نشد")
 
     
 # @login_required
@@ -78,6 +118,7 @@ def show_questions(request,id):
 #             return render(request, 'add_azmoon.html' ,context=context)       
 
 # @user_passes_test(check_semat)
+
 @login_required
 def add_azmoon2(request):
     participant = Participant.objects.all().get(mellicode=request.user)

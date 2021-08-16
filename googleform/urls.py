@@ -1,3 +1,4 @@
+from formapp.views import Profile
 from formapp.views import add_azmoon2
 from formapp.views import Home, show_participant,show_azmoon, show_questions,add_question,edit_question,signup
 from django.contrib import admin 
@@ -15,6 +16,6 @@ urlpatterns = [
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
     path('accounts/', include('formapp.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
-    path('library/signup/', signup),
+    path('Profile/', Profile , name = 'Profile'),
     path('',TemplateView.as_view(template_name='Home.html'),name='Home'),
 ]
