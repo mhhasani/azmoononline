@@ -16,13 +16,13 @@
 </body>
 {% block main%} 
 <body dir = 'rtl'>
-    <h1>{{participant.firstname}} {{participant.lastname}}</h1>
+    <h1>{{participant.first_name}} {{participant.last_name}}</h1>
     <h2>{{participant.semat}}</h2>
     <h2>{{participant.mellicode}}</h2>
     <a href="{% url 'azmoon' %}">آزمون ها</a>
-    {% for az in azmoon %}
-        <h3>{{az.name}}</h3>
-    {% endfor %}
+      {%for partaz in participant.azmoon.all%}
+          <h2>{{partaz.name}}</h2>
+      {% endfor %}
 
 </body>
 {% endblock %} 

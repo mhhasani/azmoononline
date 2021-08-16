@@ -32,7 +32,7 @@
     </div>
                 <div class="ui four stackable cards">
 
-        {% for az in azmoon %}
+        {%for az in participant.azmoon.all %}
             <a class="ui small link card course-card" href= "{% url 'quest' az.id %}">
                 <div class="image">
                     <img src="https://static.quera.ir/overview/course-images/11-small.0-b062dbbb9f04.jpg">

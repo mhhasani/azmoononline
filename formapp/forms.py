@@ -31,7 +31,6 @@ class SignUpForm(UserCreationForm):
         return cd
 
 class AzmoonForm2(forms.Form):
-    participant = ModelMultipleChoiceField(Participant.objects,required=False)
     name = forms.CharField()
     start_time = forms.DateTimeField(required=False)
     end_time = forms.DateTimeField(required=False)

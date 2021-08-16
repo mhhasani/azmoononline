@@ -33,35 +33,32 @@ def check_semat(user):
 @login_required
 def show_participant(request,id):
     participant = Participant.objects.all().get(id=id)
-    azmoon = Azmoon.objects.all().filter(participant__id = id)
+    azmoon = Azmoon.objects.all()
     context = {'participant':participant , 'azmoon':azmoon , 'id':id}
     return render(request, 'show_participant.html', context=context)
 
 @login_required
 def show_azmoon(request):
-    azmoons = Azmoon.objects.all()
-    for azmoon in azmoons:
+    participant = Participant.objects.all().get(mellicode=request.user)
+    for azmoon in participant.azmoon.all():
         q = Question.objects.all().filter(azmoon__id=azmoon.id)
         azmoon.Question_number = q.count()
         azmoon.save()
-    context = {'azmoon':azmoons}
+    context = {'participant':participant}
     return render(request, 'show_azmoon.html', context=context)
 
 @login_required
 def show_questions(request,id):
-    questions = Question.objects.all()
-    azmoon = Azmoon.objects.get(id=id)
-    user = Participant.objects.all()
+    question = Question.objects.all().filter(azmoon__id=id).values()
+    participant = Participant.objects.all().filter(azmoon__id=id).values()
     wb = Workbook()
     ws = wb.active
     ws.title = "Data"
     ws.append(['id','firstname','lastname','phone_number','mellicode','semat'])
-    # for u in user:
-    #     ws.append([u.id,u.firstname,u.lastname,u.phone_number,u.mellicode])
-    for part in azmoon.participant.all():
-        ws.append([part.id,part.first_name,part.last_name,part.phone_number,part.mellicode,part.semat])
+    for part in participant:
+        ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode'],part['semat']])
     wb.save(f"azmoon_{id}_participant.xlsx")
-    context = {'questions':questions,'id':id,'azmoon':azmoon,'user':user}
+    context = {'questions':question,'id':id,'participant':participant}
     return render(request, 'show_question.html', context=context)
 
     
@@ -83,6 +80,7 @@ def show_questions(request,id):
 # @user_passes_test(check_semat)
 @login_required
 def add_azmoon2(request):
+    participant = Participant.objects.all().get(mellicode=request.user)
     if request.method == "GET":
         form = AzmoonForm2()
         return render(request, 'add_azmoon.html', {'form': form})
@@ -92,11 +90,11 @@ def add_azmoon2(request):
         context = {'azmoons':azmoons,'form': form}
         if form.is_valid():
             azmoon = Azmoon.objects.create() 
-            azmoon.participant.set(form.cleaned_data['participant'])
             azmoon.name = form.cleaned_data['name']                       
             azmoon.start_time = form.cleaned_data['start_time']                       
             azmoon.end_time = form.cleaned_data['end_time'] 
-            azmoon.save()                      
+            azmoon.save()  
+            participant.azmoon.add(azmoon)                
             return redirect('azmoon')
         else:
             return render(request, 'add_azmoon.html' ,context=context) 

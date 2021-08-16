@@ -32,21 +32,17 @@
     <h1> سوالات:</h1>
     <br>
     {% for quest in questions %}
-        {% for azmoon in quest.azmoon.all %}
-            {% if azmoon.id == id %}
-                <a href="{% url 'edit_question' quest.id azmoon.id %}"><h1>{{quest.Q_text}}</h1></a>
+                <a href="{% url 'edit_question' quest.id id %}"><h1>{{quest.Q_text}}</h1></a>
                 <img src="{{quest.Q_image}}"> <br>
                 <input type="radio" name="answer" id="answer">{{quest.answer1}}<br>
                 <input type="radio" name="answer" id="answer">{{quest.answer2}}<br>
                 <input type="radio" name="answer" id="answer">{{quest.answer3}}<br>
                 <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
                 <h5><hr></h5>
-            {%endif%}
-        {% endfor %}
     {% endfor %} 
     <h1>شرکت کننده ها:</h1>
-    {% for part in azmoon.participant.all %}
-        <h2><a href="{% url 'part' part.id %}">{{part.user.first_name}} {{part.user.last_name}} ({{part.semat}})</a></h2>
+    {% for part in participant %}
+        <h2><a href="{% url 'part' part.id %}">{{part.first_name}} {{part.last_name}} ({{part.semat}})</a></h2>
     {% endfor %}
     <!-- <a href="azmoon_1_participant.xlsx">اطلاعات شرکت کننده ها</a> -->
 </body>
