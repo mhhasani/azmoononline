@@ -1,3 +1,4 @@
+from formapp.views import add_class
 from formapp.views import show_class
 from formapp.views import Profile
 from formapp.views import add_azmoon2
@@ -14,6 +15,7 @@ urlpatterns = [
     path('show_participant/<int:id>/',show_participant,name='part'),
     path('show_question/<int:id>/',show_questions,name='quest'),
     path('add_azmoon/<int:id>/',add_azmoon2, name='add_azmoon'),
+    path('add_class/',add_class, name='add_class'),
     path('add_question/<int:id>/',add_question, name='add_question'),
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
     path('accounts/', include('formapp.urls')),

@@ -51,6 +51,9 @@ class AzmoonForm2(forms.Form):
     start_time = forms.DateTimeField(required=False)
     end_time = forms.DateTimeField(required=False)
 
+class ClassForm(forms.Form):
+    name = forms.CharField()
+
 # class AzmoonForm(forms.ModelForm):
 #     class Meta:
 #         model = Azmoon

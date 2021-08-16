@@ -77,6 +77,10 @@ def show_class(request):
         Class.participant_number = part.count()
         Class.azmoon_number = az.count()
         Class.save()
+    for azmoon in participant.azmoon.all():
+        q = Question.objects.all().filter(azmoon__id=azmoon.id)
+        azmoon.Question_number = q.count()
+        azmoon.save()
     context = {'participant':participant}
     return render(request, 'show_class.html', context=context)
 
@@ -167,7 +171,26 @@ def add_azmoon2(request,id):
             return redirect('azmoon',id)
         else:
             return render(request, 'add_azmoon.html' ,context=context) 
-            
+
+@login_required
+def add_class(request):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    if request.method == "GET":
+        form = ClassForm()
+        return render(request, 'add_class.html', {'form': form})
+    if request.method == "POST":
+        form = ClassForm(request.POST)
+        clas = Class.objects.all()
+        context = {'class':clas,'form': form}
+        if form.is_valid():
+            Cls = Class.objects.create() 
+            Cls.name = form.cleaned_data['name']                       
+            participant.partclass.add(Cls)                
+            Cls.save()  
+            return redirect('class')
+        else:
+            return render(request, 'add_class.html' ,context=context) 
+
 @login_required
 def add_question(request,id):
     azmoon = Azmoon.objects.filter(id=id)

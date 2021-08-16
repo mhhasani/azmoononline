@@ -16,10 +16,10 @@
 
 
         <div class="ui left secondary stackable menu">
-            
+            <a class="item" href="{% url 'add_class' %}">ایجاد کلاس جدید</a>
         </div>
     </div>
-                <div class="ui four stackable cards">
+                <div class="ui three stackable cards">
 
         {%for Class in participant.partclass.all %}
             <a class="ui small link card course-card" href= "{% url 'azmoon' Class.id %}">
@@ -38,12 +38,27 @@
             </a>
         {%endfor%}
                 </div>
-            </div>
-            <div class="four wide column">
-                <div>
-                
-    
 
+            <div class="four wide column">
+
+            </div>
+                
+            <hr>
+            <div class="ui four stackable cards">
+                {%for az in participant.azmoon.all %}
+                <a class="ui small link card course-card" href= "{% url 'quest' az.id %}">
+                    <div class="image">
+                        <img src="https://static.quera.ir/overview/course-images/11-small.0-b062dbbb9f04.jpg">
+                    </div>
+                    <div class="content" style="position: relative; text-align: center;">
+                        <div class="header">{{az.name}}</div>
+                    </div>
+                    <div class="extra content">
+                            {{az.Question_number}} سوال
+                    </div>
+                </a>
+                {%endfor%}
+                </div>
 <script>
     $('.training-progress').progress();
 </script>

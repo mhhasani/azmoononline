@@ -15,6 +15,8 @@ class Participant2Inline(admin.TabularInline):
 class QuestionInline(admin.StackedInline):
     model = Question.azmoon.through
 
+class ClassInline(admin.StackedInline):
+    model = Class
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
@@ -24,7 +26,7 @@ class ClassAdmin(admin.ModelAdmin):
 @admin.register(Azmoon)
 class AzmoonAdmin(admin.ModelAdmin):
     list_display = ['id','name','start_time','end_time','Question_number']
-    inlines = [QuestionInline,ParticipantInline]
+    inlines = [QuestionInline,ParticipantInline,AzmoonInline]
 
 @admin.register(Question)
 class QuestionsAdmin(admin.ModelAdmin):
