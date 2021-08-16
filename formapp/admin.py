@@ -3,11 +3,23 @@ from .models import *
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from .models import Participant
 
+class AzmoonInline(admin.TabularInline):
+    model = Azmoon.azmoonclass.through
+
 class ParticipantInline(admin.TabularInline):
     model = Participant.azmoon.through
 
+class Participant2Inline(admin.TabularInline):
+    model = Participant.partclass.through
+
 class QuestionInline(admin.StackedInline):
     model = Question.azmoon.through
+
+
+@admin.register(Class)
+class ClassAdmin(admin.ModelAdmin):
+    list_display = ['id','name','address','participant_number','azmoon_number']
+    inlines = [AzmoonInline,Participant2Inline]
 
 @admin.register(Azmoon)
 class AzmoonAdmin(admin.ModelAdmin):
@@ -61,5 +73,5 @@ class ParticipantAdmin(DefaultUserAdmin):
         'phone_number',
         'email',
     )    
-    inlines = [ParticipantInline]
+    inlines = [Participant2Inline,ParticipantInline]
 

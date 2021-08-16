@@ -17,8 +17,16 @@ from django.contrib.auth.models import AbstractUser
 #     semat = models.CharField(max_length=200 ,choices=SEMAT_CHOICES ,default = 'daneshamoz')
 #     def __str__(self):
 #         return self.mellicode
+class Class(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200, null = True,blank = True)
+    participant_number = models.IntegerField(default=0)
+    azmoon_number = models.IntegerField(default=0)
+    def __str__(self):
+        return self.name
 
 class Azmoon(models.Model):
+    azmoonclass = ManyToManyField(Class,blank=True)
     name = models.CharField(max_length=200)
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
@@ -27,6 +35,7 @@ class Azmoon(models.Model):
         return self.name
 
 class Participant(AbstractUser):
+    partclass = ManyToManyField(Class,blank=True)
     azmoon = ManyToManyField(Azmoon,blank=True)
     phone_number = models.CharField(unique=True,max_length=50,null=True)
     mellicode = models.CharField(unique=True,max_length=10,validators=[MinLengthValidator(10)])

@@ -8,8 +8,8 @@
     <h1>{{participant.first_name}} {{participant.last_name}}</h1>
     <h2>{{participant.semat}}</h2>
     <h2>{{participant.mellicode}}</h2>
-    <a href="{% url 'azmoon' %}">آزمون ها</a>
-      {%for partaz in participant.azmoon.all%}
+    <a href="{% url 'class' %}">کلاس ها</a>
+      {%for partaz in participant.azmoonclass.all%}
           <h2>{{partaz.name}}</h2>
       {% endfor %}
 

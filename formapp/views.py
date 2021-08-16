@@ -64,19 +64,45 @@ def check_semat(user):
 @login_required
 def show_participant(request,id):
     participant = Participant.objects.all().get(id=id)
-    azmoon = Azmoon.objects.all()
-    context = {'participant':participant , 'azmoon':azmoon , 'id':id}
+    classes = Class.objects.all()
+    context = {'participant':participant , 'classes':classes , 'id':id}
     return render(request, 'show_participant.html', context=context)
 
 @login_required
-def show_azmoon(request):
+def show_class(request):
     participant = Participant.objects.all().get(mellicode=request.user)
-    for azmoon in participant.azmoon.all():
-        q = Question.objects.all().filter(azmoon__id=azmoon.id)
-        azmoon.Question_number = q.count()
-        azmoon.save()
+    for Class in participant.partclass.all():
+        part = Participant.objects.all().filter(partclass__id = Class.id)
+        az = Azmoon.objects.all().filter(azmoonclass__id = Class.id)
+        Class.participant_number = part.count()
+        Class.azmoon_number = az.count()
+        Class.save()
     context = {'participant':participant}
-    return render(request, 'show_azmoon.html', context=context)
+    return render(request, 'show_class.html', context=context)
+
+@login_required
+def show_azmoon(request,id):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    check_in_class = False
+    for c in request.user.partclass.all():
+        if c.id == id:
+            check_in_class = True
+            break
+    if check_in_class:
+        for azmoon in participant.azmoon.all():
+            q = Question.objects.all().filter(azmoon__id=azmoon.id)
+            azmoon.Question_number = q.count()
+            azmoon.save()
+        azmoon=[]
+        for az in participant.azmoon.all():
+            for b in az.azmoonclass.all():
+                if id == b.id:
+                    azmoon.append(az)
+                    break 
+        context = {'participant':participant,'id':id,'azmoon':azmoon}
+        return render(request, 'show_azmoon.html', context=context)
+    else:
+        return HttpResponse("کلاس یافت نشد")
 
 @login_required
 def show_questions(request,id):
@@ -120,7 +146,8 @@ def show_questions(request,id):
 # @user_passes_test(check_semat)
 
 @login_required
-def add_azmoon2(request):
+def add_azmoon2(request,id):
+    cls = Class.objects.all().get(id=id)
     participant = Participant.objects.all().get(mellicode=request.user)
     if request.method == "GET":
         form = AzmoonForm2()
@@ -128,15 +155,16 @@ def add_azmoon2(request):
     if request.method == "POST":
         form = AzmoonForm2(request.POST)
         azmoons = Azmoon.objects.all()
-        context = {'azmoons':azmoons,'form': form}
+        context = {'azmoons':azmoons,'form': form,'id':id}
         if form.is_valid():
             azmoon = Azmoon.objects.create() 
             azmoon.name = form.cleaned_data['name']                       
             azmoon.start_time = form.cleaned_data['start_time']                       
             azmoon.end_time = form.cleaned_data['end_time'] 
+            azmoon.azmoonclass.add(cls)
             azmoon.save()  
             participant.azmoon.add(azmoon)                
-            return redirect('azmoon')
+            return redirect('azmoon',id)
         else:
             return render(request, 'add_azmoon.html' ,context=context) 
             

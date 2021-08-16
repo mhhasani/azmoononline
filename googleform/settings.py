@@ -121,7 +121,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'azmoon'
+LOGIN_REDIRECT_URL = 'class'
 LOGOUT_REDIRECT_URL = 'Home' 
 AUTH_USER_MODEL = 'formapp.Participant'
 
