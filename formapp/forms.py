@@ -58,7 +58,9 @@ class ClassForm(forms.Form):
 #     class Meta:
 #         model = Azmoon
 #         fields = ('name', 'start_time','end_time')
-        
+class JoinClassForm(forms.Form):
+    join_code = forms.CharField()  
+             
 class QuestionForm(forms.Form):
     # azmoon = ModelMultipleChoiceField(Azmoon.objects,required=False)
     Q_text = forms.CharField(widget=forms.Textarea,required=True)

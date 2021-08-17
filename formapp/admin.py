@@ -44,7 +44,6 @@ class ParticipantAdmin(DefaultUserAdmin):
                 'email',
                 'phone_number',
                 'mellicode',
-                'semat',
             )
         }),
         ('Permissions', {
@@ -65,7 +64,6 @@ class ParticipantAdmin(DefaultUserAdmin):
         'last_name',
         'phone_number',
         'is_staff',
-        'semat',
     )
 
     search_fields = (

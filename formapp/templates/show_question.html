@@ -36,10 +36,7 @@
                 <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
                 <h5><hr></h5>
     {% endfor %} 
-    <h1>شرکت کننده ها:</h1>
-    {% for part in participant %}
-        <h2><a href="{% url 'part' part.id %}">{{part.first_name}} {{part.last_name}} ({{part.semat}})</a></h2>
-    {% endfor %}
+
     <!-- <a href="azmoon_1_participant.xlsx">اطلاعات شرکت کننده ها</a> -->
 </body>
 </html>

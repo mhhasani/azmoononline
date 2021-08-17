@@ -9,7 +9,7 @@
     <h2>{{participant.semat}}</h2>
     <h2>{{participant.mellicode}}</h2>
     <a href="{% url 'class' %}">کلاس ها</a>
-      {%for partaz in participant.azmoonclass.all%}
+      {%for partaz in participant.partclass.all%}
           <h2>{{partaz.name}}</h2>
       {% endfor %}
 

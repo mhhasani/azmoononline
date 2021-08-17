@@ -3,6 +3,7 @@ from django.core.validators import MinLengthValidator
 from django.db.models.fields.related import ManyToManyField
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+from random import randint
 
 # class Participant(models.Model):
 #     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
@@ -17,9 +18,18 @@ from django.contrib.auth.models import AbstractUser
 #     semat = models.CharField(max_length=200 ,choices=SEMAT_CHOICES ,default = 'daneshamoz')
 #     def __str__(self):
 #         return self.mellicode
+
+def random_address():
+    final = ''
+    li = 'abcdefghijklmnopqrstuxwzy1234567890'
+    for i in range(10):
+        random_index = randint(1,34)
+        final += li[random_index]
+    return final
+
 class Class(models.Model):
     name = models.CharField(max_length=200)
-    address = models.CharField(max_length=200, null = True,blank = True)
+    address = models.CharField(max_length=200, default=random_address())
     participant_number = models.IntegerField(default=0)
     azmoon_number = models.IntegerField(default=0)
     def __str__(self):
@@ -39,11 +49,6 @@ class Participant(AbstractUser):
     azmoon = ManyToManyField(Azmoon,blank=True)
     phone_number = models.CharField(unique=True,max_length=50,null=True)
     mellicode = models.CharField(unique=True,max_length=10,validators=[MinLengthValidator(10)])
-    SEMAT_CHOICES = (
-        ('Ostad','Ostad'),
-        ('daneshamoz','daneshamoz'),
-    )
-    semat = models.CharField(max_length=200 ,choices=SEMAT_CHOICES ,default = 'daneshamoz')
     def __str__(self):
         return self.mellicode
 

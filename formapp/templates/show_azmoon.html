@@ -6,7 +6,7 @@
 {% block main%} 
     
     <div id="body_container">
-        
+        <h1>لینک کلاس: {{class.address}}</h1>        
     <div class="ui container">
         <div class="ui stackable grid">
             <div class="twelve wide column">
@@ -35,12 +35,19 @@
                     </div>
                 </a>
         {%endfor%}
+
                 </div>
+                <hr>
+                <h1>شرکت کننده ها:</h1>
+                {% for part in participants %}
+                    <h2><a href="{% url 'part' part.id %}">{{part.first_name}} {{part.last_name}}</a></h2>
+                {% endfor %}
             </div>
             <div class="four wide column">
                 <div>
                 
-    
+
+                        
 
 <script>
     $('.training-progress').progress();

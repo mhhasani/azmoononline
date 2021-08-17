@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from openpyxl import Workbook
+from django.shortcuts import get_object_or_404
 
 
 @csrf_exempt
@@ -37,7 +38,6 @@ def Profile(request):
                 'last_name' : participant.last_name,
                 'phone_number' : participant.phone_number,
                 'mellicode' : participant.mellicode,
-                'semat' : participant.semat,
             }
         )
         context = {'form': form,'participant':participant}
@@ -85,25 +85,50 @@ def show_class(request):
     return render(request, 'show_class.html', context=context)
 
 @login_required
+def search_class(request):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    if request.method == "GET":
+        form = JoinClassForm()
+        return render(request, 'search_class.html', {'form': form})        
+    if request.method == "POST":
+        form = JoinClassForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
+            cls = get_object_or_404(Class,address = form.cleaned_data['join_code'])
+            # cls = Class.objects.all().get(address = form.cleaned_data['join_code'])
+            return redirect('join_class',cls.address)
+        else:
+            return HttpResponse("کلاس یافت نشد")
+
+@login_required
+def join_class(request,join_code):
+    cls = get_object_or_404(Class,address = join_code)
+    participant = Participant.objects.all().get(mellicode=request.user)
+    if cls:
+        participant.partclass.add(cls)
+        return redirect('class')        
+    else:
+        return HttpResponse("کلاس یافت نشد")
+
+@login_required
 def show_azmoon(request,id):
     participant = Participant.objects.all().get(mellicode=request.user)
+    participants = Participant.objects.all().filter(partclass__id=id).values()
+    az = Azmoon.objects.all().filter(azmoonclass__id=id).values()
     check_in_class = False
     for c in request.user.partclass.all():
         if c.id == id:
             check_in_class = True
             break
     if check_in_class:
-        for azmoon in participant.azmoon.all():
-            q = Question.objects.all().filter(azmoon__id=azmoon.id)
-            azmoon.Question_number = q.count()
-            azmoon.save()
+        for azmoon in az:
+            q = Question.objects.all().filter(azmoon__id=azmoon['id'])
+            azmoon['Question_number'] = q.count()
         azmoon=[]
-        for az in participant.azmoon.all():
-            for b in az.azmoonclass.all():
-                if id == b.id:
-                    azmoon.append(az)
-                    break 
-        context = {'participant':participant,'id':id,'azmoon':azmoon}
+        for a in az:
+            azmoon.append(a)
+        cls = Class.objects.all().get(id=id)
+        context = {'participants':participants,'id':id,'azmoon':azmoon,'class':cls}
         return render(request, 'show_azmoon.html', context=context)
     else:
         return HttpResponse("کلاس یافت نشد")
@@ -111,22 +136,24 @@ def show_azmoon(request,id):
 @login_required
 def show_questions(request,id):
     question = Question.objects.all().filter(azmoon__id=id).values()
-    participant = Participant.objects.all().filter(azmoon__id=id).values()
-    azmoons = Azmoon.objects.all() 
-    check_in_azmoon = False
-    for azmoon in request.user.azmoon.all():
-        if azmoon.id == id:
-            check_in_azmoon = True
-            break
-    if check_in_azmoon:
-        wb = Workbook()
-        ws = wb.active
-        ws.title = "Data"
-        ws.append(['id','firstname','lastname','phone_number','mellicode','semat'])
-        for part in participant:
-            ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode'],part['semat']])
-        wb.save(f"azmoon_{id}_participant.xlsx")
-        context = {'questions':question,'id':id,'participant':participant}
+    participant = Participant.objects.all().get(mellicode = request.user)
+    # azmoon = Azmoon.objects.all().get(id=id)
+    azmoon = get_object_or_404(Azmoon, id=id)
+    check_in_class = False
+    for clsp in participant.partclass.all():
+        for clsa in azmoon.azmoonclass.all():
+            if clsp.id == clsa.id:
+                check_in_class = True
+                break
+    if check_in_class:
+        # wb = Workbook()
+        # ws = wb.active
+        # ws.title = "Data"
+        # ws.append(['id','firstname','lastname','phone_number','mellicode'])
+        # for part in participant:
+        #     ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode']])
+        # wb.save(f"azmoon_{id}_participant.xlsx")
+        context = {'questions':question,'id':id}
         return render(request, 'show_question.html', context=context)
     else:
         return HttpResponse("آزمون یافت نشد")
@@ -152,7 +179,10 @@ def show_questions(request,id):
 @login_required
 def add_azmoon2(request,id):
     cls = Class.objects.all().get(id=id)
-    participant = Participant.objects.all().get(mellicode=request.user)
+    az = Azmoon.objects.all().filter(azmoonclass__id = id).values()
+    azid = []
+    for azmoon in az:
+        azid.append(azmoon['id'])
     if request.method == "GET":
         form = AzmoonForm2()
         return render(request, 'add_azmoon.html', {'form': form})
@@ -166,8 +196,10 @@ def add_azmoon2(request,id):
             azmoon.start_time = form.cleaned_data['start_time']                       
             azmoon.end_time = form.cleaned_data['end_time'] 
             azmoon.azmoonclass.add(cls)
-            azmoon.save()  
-            participant.azmoon.add(azmoon)                
+            azmoon.save()
+            for a in azid:
+                A = Azmoon.objects.all().get(id=a)
+                A.azmoonclass.add(cls) 
             return redirect('azmoon',id)
         else:
             return render(request, 'add_azmoon.html' ,context=context) 
@@ -185,7 +217,7 @@ def add_class(request):
         if form.is_valid():
             Cls = Class.objects.create() 
             Cls.name = form.cleaned_data['name']                       
-            participant.partclass.add(Cls)                
+            participant.partclass.add(Cls)  
             Cls.save()  
             return redirect('class')
         else:

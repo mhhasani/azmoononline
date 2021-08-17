@@ -1,3 +1,4 @@
+from formapp.views import search_class , join_class
 from formapp.views import add_class
 from formapp.views import show_class
 from formapp.views import Profile
@@ -12,6 +13,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('show_azmoon/<int:id>/',show_azmoon,name='azmoon'),
     path('show_class/', show_class,name='class'),
+    path('search/',search_class,name='search_class'),
+    path('join/<str:join_code>',join_class,name='join_class'),
     path('show_participant/<int:id>/',show_participant,name='part'),
     path('show_question/<int:id>/',show_questions,name='quest'),
     path('add_azmoon/<int:id>/',add_azmoon2, name='add_azmoon'),

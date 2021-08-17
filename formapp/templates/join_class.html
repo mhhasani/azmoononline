@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Classes{% endblock %}
+{% block title %}Participant{% endblock %}
 
 <body>
 {% block main%} 
@@ -16,34 +16,32 @@
 
 
         <div class="ui left secondary stackable menu">
-            <a class="item" href="{% url 'add_class' %}">ایجاد کلاس جدید</a>
-            <a class="item" href="{% url 'search_class' %}">اضافه شدن به کلاس</a>            
+            
+            <a class="item" href="{% url 'add_azmoon' id %}">ایجاد آزمون جدید</a>
         </div>
     </div>
-                <div class="ui three stackable cards">
+                <div class="ui four stackable cards">
 
-        {%for Class in participant.partclass.all %}
-            <a class="ui small link card course-card" href= "{% url 'azmoon' Class.id %}">
-                <div class="image">
-                    <img src="https://static.quera.ir/overview/course-images/11-small.0-b062dbbb9f04.jpg">
-                </div>
-                <div class="content" style="position: relative; text-align: center;">
-                    <div class="header">{{Class.name}}</div>
-                </div>
-                <div class="extra content">
-                    {{Class.azmoon_number}} آزمون
-                </div>
-                <div class="extra content">
-                    {{Class.participant_number}} شرکت کننده
-                </div>
-            </a>
+        {%for az in azmoon %}
+                <a class="ui small link card course-card" href= "{% url 'quest' az.id %}">
+                    <div class="image">
+                        <img src="https://static.quera.ir/overview/course-images/11-small.0-b062dbbb9f04.jpg">
+                    </div>
+                    <div class="content" style="position: relative; text-align: center;">
+                        <div class="header">{{az.name}}</div>
+                    </div>
+                    <div class="extra content">
+                            {{az.Question_number}} سوال
+                    </div>
+                </a>
         {%endfor%}
                 </div>
-
-            <div class="four wide column">
-
             </div>
+            <div class="four wide column">
+                <div>
                 
+    
+
 <script>
     $('.training-progress').progress();
 </script>
@@ -72,4 +70,3 @@
     </div>
     
 {% endblock %}
-</body>
