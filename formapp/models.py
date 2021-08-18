@@ -4,6 +4,8 @@ from django.db.models.fields.related import ManyToManyField
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from random import randint
+from django.contrib.postgres.fields import ArrayField
+
 
 # class Participant(models.Model):
 #     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
@@ -32,6 +34,7 @@ class Class(models.Model):
     address = models.CharField(max_length=200, default=random_address())
     participant_number = models.IntegerField(default=0)
     azmoon_number = models.IntegerField(default=0)
+    owner = models.IntegerField(null = True)
     def __str__(self):
         return self.name
 

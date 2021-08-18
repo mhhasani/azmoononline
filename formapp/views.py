@@ -218,6 +218,7 @@ def add_class(request):
             Cls = Class.objects.create() 
             Cls.name = form.cleaned_data['name']                       
             participant.partclass.add(Cls)  
+            Cls.owner = participant.id
             Cls.save()  
             return redirect('class')
         else:
