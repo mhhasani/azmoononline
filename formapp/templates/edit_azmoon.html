@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Azmoon{% endblock %}
+
+<body>
+{% block main%} 
+<h2 dir = 'rtl'>Edit Azmoon</h2>
+<form method="POST" class="post-form" dir = 'rtl'>{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default" >Save</button>
+</form>
+{% endblock %}

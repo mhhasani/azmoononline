@@ -1,3 +1,5 @@
+from formapp.views import edit_azmoon
+from formapp.views import edit_class
 from formapp.views import search_class , join_class
 from formapp.views import add_class
 from formapp.views import show_class
@@ -21,6 +23,8 @@ urlpatterns = [
     path('add_class/',add_class, name='add_class'),
     path('add_question/<int:id>/',add_question, name='add_question'),
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
+    path('edit_class/<int:id>/',edit_class, name='edit_class'),    
+    path('edit_azmoon/<int:id>/',edit_azmoon, name='edit_azmoon'),    
     path('accounts/', include('formapp.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('Profile/', Profile , name = 'Profile'),
