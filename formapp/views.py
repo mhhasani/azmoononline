@@ -140,6 +140,13 @@ def show_azmoon(request,id):
         for a in az:
             azmoon.append(a)
         cls = Class.objects.all().get(id=id)
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Data"
+        ws.append(['id','firstname','lastname','phone_number','mellicode'])
+        for part in participants:
+            ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode']])
+        wb.save(f"class_{id}_participant.xlsx")
         context = {'participants':participants,'id':id,'azmoon':azmoon,'class':cls}
         return render(request, 'show_azmoon.html', context=context)
     else:
@@ -158,35 +165,10 @@ def show_questions(request,id):
                 check_in_class = True
                 break
     if check_in_class:
-        # wb = Workbook()
-        # ws = wb.active
-        # ws.title = "Data"
-        # ws.append(['id','firstname','lastname','phone_number','mellicode'])
-        # for part in participant:
-        #     ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode']])
-        # wb.save(f"azmoon_{id}_participant.xlsx")
         context = {'questions':question,'id':id,'azmoon':azmoon}
         return render(request, 'show_question.html', context=context)
     else:
         return HttpResponse("آزمون یافت نشد")
-
-    
-# @login_required
-# def add_azmoon(request):
-#     if request.method == "GET":
-#         form = AzmoonForm()
-#         return render(request, 'add_azmoon.html', {'form': form})
-#     if request.method == "POST":
-#         form = AzmoonForm(request.POST)
-#         azmoons = Azmoon.objects.all()
-#         context = {'azmoons':azmoons,'form': form}
-#         if form.is_valid():
-#             azmoon = form.save()  
-#             return redirect('azmoon')
-#         else:
-#             return render(request, 'add_azmoon.html' ,context=context)       
-
-# @user_passes_test(check_semat)
 
 @login_required
 def add_azmoon2(request,id):

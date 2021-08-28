@@ -5,9 +5,9 @@
 
 <body>
 {% block main%} 
-<h2 dir = 'rtl'>Search Class</h2>
+<h5 dir = 'rtl'>کد 10 رقمی کلاس مورد نظر را وارد کنید</h5>
 <form method="POST" class="post-form" dir = 'rtl'>{% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="save btn btn-default" >Save</button>
+    <button type="submit" class="save btn btn-default" >Join</button>
 </form>
 {% endblock %}
