@@ -46,11 +46,11 @@ def Profile(request):
         form = ProfileForm(request.POST)
         context = {'form': form}
         if form.is_valid():
-            participant.username = form.cleaned_data['username']
+            # participant.username = form.cleaned_data['username']
             participant.first_name = form.cleaned_data['first_name']
             participant.last_name = form.cleaned_data['last_name']
-            participant.phone_number = form.cleaned_data['phone_number']
-            participant.mellicode = form.cleaned_data['mellicode']
+            # participant.phone_number = form.cleaned_data['phone_number']
+            # participant.mellicode = form.cleaned_data['mellicode']
             participant.save()
             return redirect('Home')
         else:
@@ -165,7 +165,7 @@ def show_questions(request,id):
         # for part in participant:
         #     ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode']])
         # wb.save(f"azmoon_{id}_participant.xlsx")
-        context = {'questions':question,'id':id}
+        context = {'questions':question,'id':id,'azmoon':azmoon}
         return render(request, 'show_question.html', context=context)
     else:
         return HttpResponse("آزمون یافت نشد")

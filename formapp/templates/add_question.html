@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
+{%block titr%}اضافه کردن سوال{% endblock %}  
 
 <body>
 {% block main%} 
-<h2 dir = 'rtl'>New Question for {{azmoon}}</h2>
+<h2 dir = 'rtl'>سوال جدید برای آزمون "{{azmoon}}"</h2>
 <form method="POST" class="post-form" dir = 'rtl'>{% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="save btn btn-default" >Save</button>

@@ -4,7 +4,12 @@
 
 <body>
 {% block body %}
-
+<div dir="ltr">
+    <h1>user: {{participant.username}}</h1>
+    <h1>Phone number: {{participant.phone_number}}</h1>
+    <h1>National code: {{participant.mellicode}}</h1>
+</div>
+<br>
 <form method="POST" class="post-form" dir = 'ltr'>{% csrf_token %}
     {{ form.as_p }}
     <button type="submit" class="save btn btn-default" >Save</button>

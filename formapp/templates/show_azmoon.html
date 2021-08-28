@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}Participant{% endblock %}
+{%block titr%}آزمون ها{% endblock %}  
 
 <body>
 {% block main%} 
     
     <div id="body_container">
-        <h1>لینک کلاس: {{class.address}}</h1>        
+        <h1>لینک کلاس: <a href="{% url 'join_class' class.address %}">{{class.address}}</a></h1>        
     <div class="ui container">
         <div class="ui stackable grid">
             <div class="twelve wide column">

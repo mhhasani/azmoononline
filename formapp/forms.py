@@ -13,13 +13,13 @@ from django.core.validators import MinLengthValidator
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Participant
-        fields = ('username','first_name','last_name','phone_number','mellicode')
+        fields = ('first_name','last_name')
     # def clean(self):
     #     cd = self.cleaned_data
     #     u = Participant.objects.all()
     #     for part in u:
-    #         if part.username == cd.get('username'):
-    #             self.add_error('username', "username is requiered !")     
+    #         # if part.username == cd.get('username'):
+    #         #     self.add_error('username', "username is requiered !")     
     #         if part.phone_number == cd.get('phone_number'):
     #             self.add_error('phone_number', "phone number is requiered !")
     #         if part.mellicode == cd.get('mellicode'):
