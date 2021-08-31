@@ -48,12 +48,26 @@ class Azmoon(models.Model):
         return self.name
 
 class Participant(AbstractUser):
-    partclass = ManyToManyField(Class,blank=True)
-    azmoon = ManyToManyField(Azmoon,blank=True)
+    partclass = models.ManyToManyField(Class,blank=True)
+    azmoon = models.ManyToManyField(Azmoon,blank=True)
     phone_number = models.CharField(unique=True,max_length=50,null=True)
     mellicode = models.CharField(unique=True,max_length=10,validators=[MinLengthValidator(10)])
     def __str__(self):
         return self.mellicode
+
+class Examiner(models.Model):
+    participant = models.ForeignKey(Participant,blank=True,on_delete=models.CASCADE)
+    partclass = models.ForeignKey(Class,blank=True,null=True,on_delete=models.CASCADE)
+    azmoon = models.ForeignKey(Azmoon,blank=True,on_delete=models.CASCADE)
+    SEMAT_CHOICES = (
+        ('Ostad','Ostad'),
+        ('daneshamoz','daneshamoz'),
+    )
+    semat = models.CharField(max_length=200 ,choices=SEMAT_CHOICES ,default = 'daneshamoz')
+    percent_score = models.FloatField(default = 0,blank=True)
+    score = models.FloatField(default = 0,blank=True)
+    rank = models.IntegerField(default = 0,blank=True)
+
 
 class Question(models.Model):
     azmoon = models.ManyToManyField(Azmoon,blank=True)

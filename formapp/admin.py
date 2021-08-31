@@ -1,7 +1,6 @@
 from django.contrib import admin,messages
 from .models import *
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
-from .models import Participant
 
 class AzmoonInline(admin.TabularInline):
     model = Azmoon.azmoonclass.through
@@ -75,3 +74,6 @@ class ParticipantAdmin(DefaultUserAdmin):
     )    
     inlines = [Participant2Inline,ParticipantInline]
 
+@admin.register(Examiner)
+class ExaminerAdmin(admin.ModelAdmin):
+    list_display = ['id','participant','partclass','azmoon','semat','percent_score']

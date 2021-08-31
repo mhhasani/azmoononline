@@ -165,7 +165,16 @@ def show_questions(request,id):
                 check_in_class = True
                 break
     if check_in_class:
-        context = {'questions':question,'id':id,'azmoon':azmoon}
+        # examiner = get_object_or_404(Examiner, participant_id = participant.id , azmoon_id=id)
+        examiner = Examiner.objects.all().filter(participant = participant).filter(azmoon=azmoon)
+        if not examiner:
+            exam = Examiner.objects.create(
+                participant = participant,
+                azmoon = azmoon 
+            )
+            exam.save() 
+        examiner = Examiner.objects.all().filter(azmoon__id=id)          
+        context = {'questions':question,'id':id,'azmoon':azmoon,'examiners':examiner}
         return render(request, 'show_question.html', context=context)
     else:
         return HttpResponse("آزمون یافت نشد")
