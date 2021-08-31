@@ -56,11 +56,6 @@ def Profile(request):
         else:
             return render(request, 'registration/Profile.html',context=context) 
 
-def check_semat(user):
-    if user.semat=="Ostad":
-        return True
-
-# @user_passes_test(check_semat)
 @login_required
 def show_participant(request,id):
     user = Participant.objects.all().get(mellicode=request.user)
@@ -156,7 +151,6 @@ def show_azmoon(request,id):
 def show_questions(request,id):
     question = Question.objects.all().filter(azmoon__id=id).values()
     participant = Participant.objects.all().get(mellicode = request.user)
-    # azmoon = Azmoon.objects.all().get(id=id)
     azmoon = get_object_or_404(Azmoon, id=id)
     check_in_class = False
     for clsp in participant.partclass.all():
@@ -165,7 +159,6 @@ def show_questions(request,id):
                 check_in_class = True
                 break
     if check_in_class:
-        # examiner = get_object_or_404(Examiner, participant_id = participant.id , azmoon_id=id)
         examiner = Examiner.objects.all().filter(participant = participant).filter(azmoon=azmoon)
         if not examiner:
             exam = Examiner.objects.create(

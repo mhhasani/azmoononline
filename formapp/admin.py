@@ -4,18 +4,23 @@ from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 
 class AzmoonInline(admin.TabularInline):
     model = Azmoon.azmoonclass.through
+    extra = 0
 
 class ParticipantInline(admin.TabularInline):
     model = Participant.azmoon.through
+    extra = 0
 
 class Participant2Inline(admin.TabularInline):
     model = Participant.partclass.through
+    extra = 0
 
 class QuestionInline(admin.StackedInline):
     model = Question.azmoon.through
+    extra = 0
 
 class ClassInline(admin.StackedInline):
     model = Class
+    extra = 0
 
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
