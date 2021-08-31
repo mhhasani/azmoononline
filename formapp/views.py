@@ -403,3 +403,26 @@ def edit_azmoon(request,id):
                 return render(request, 'edit_azmoon.html' ,context=context) 
     else:
         return HttpResponse("آزمون مورد نظر یافت نشد")
+
+def activate_azmoon(request,id):
+    participant = Participant.objects.all().get(mellicode = request.user)
+    azmoon = get_object_or_404(Azmoon, id=id)
+    check_in_azmoon = False
+    for classes in participant.partclass.all():
+        for azmoons in azmoon.azmoonclass.all():
+            if classes.id == azmoons.id:
+                check_in_azmoon = True
+                break
+        if check_in_azmoon:
+            break
+    if check_in_azmoon:
+        if azmoon.isactive:
+            azmoon.isactive = False
+            azmoon.save()
+        else:
+            azmoon.isactive = True
+            azmoon.save() 
+        return redirect('quest',id)
+    else:
+        return HttpResponse("آزمون مورد نظر یافت نشد")
+           

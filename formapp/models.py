@@ -44,6 +44,7 @@ class Azmoon(models.Model):
     start_time = models.DateTimeField(blank=True,null=True)
     end_time = models.DateTimeField(blank=True,null=True)
     Question_number = models.IntegerField(default=0)
+    isactive = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 
@@ -67,7 +68,6 @@ class Examiner(models.Model):
     percent_score = models.FloatField(default = 0,blank=True)
     score = models.FloatField(default = 0,blank=True)
     rank = models.IntegerField(default = 0,blank=True)
-
 
 class Question(models.Model):
     azmoon = models.ManyToManyField(Azmoon,blank=True)
