@@ -121,6 +121,7 @@ def join_class(request,join_code):
 def show_azmoon(request,id):
     participant = Participant.objects.all().get(mellicode=request.user)
     participants = Participant.objects.all().filter(partclass__id=id).values()
+    cls = Class.objects.all().get(id=id)
     az = Azmoon.objects.all().filter(azmoonclass__id=id).values()
     check_in_class = False
     for c in request.user.partclass.all():
@@ -135,6 +136,18 @@ def show_azmoon(request,id):
         for a in az:
             azmoon.append(a)
         cls = Class.objects.all().get(id=id)
+        pc = Part_class.objects.all().filter(participant = participant).filter(partclass__id=id)
+        if not pc:
+            p_class = Part_class.objects.create(
+                participant = participant,
+                partclass = cls
+            )
+
+            if cls.owner == participant.id:
+                p_class.semat = "Ostad"
+            else:
+                p_class.semat = "daneshamoz"
+            p_class.save() 
         wb = Workbook()
         ws = wb.active
         ws.title = "Data"
@@ -142,7 +155,8 @@ def show_azmoon(request,id):
         for part in participants:
             ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode']])
         wb.save(f"class_{id}_participant.xlsx")
-        context = {'participants':participants,'id':id,'azmoon':azmoon,'class':cls}
+        pc = Part_class.objects.all().filter(partclass__id=id)
+        context = {'participants':participants,'id':id,'azmoon':azmoon,'class':cls,'pc':pc}
         return render(request, 'show_azmoon.html', context=context)
     else:
         return HttpResponse("کلاس یافت نشد")
@@ -163,7 +177,7 @@ def show_questions(request,id):
         if not examiner:
             exam = Examiner.objects.create(
                 participant = participant,
-                azmoon = azmoon 
+                azmoon = azmoon,
             )
             exam.save() 
         examiner = Examiner.objects.all().filter(azmoon__id=id)          
@@ -397,6 +411,7 @@ def edit_azmoon(request,id):
     else:
         return HttpResponse("آزمون مورد نظر یافت نشد")
 
+@login_required
 def activate_azmoon(request,id):
     participant = Participant.objects.all().get(mellicode = request.user)
     azmoon = get_object_or_404(Azmoon, id=id)
@@ -418,4 +433,42 @@ def activate_azmoon(request,id):
         return redirect('quest',id)
     else:
         return HttpResponse("آزمون مورد نظر یافت نشد")
-           
+
+@login_required         
+def natijeh_azmoon(request,id):
+    participant = Participant.objects.all().get(mellicode = request.user)
+    question = Question.objects.all().filter(azmoon__id=id).values()
+    azmoon = get_object_or_404(Azmoon, id=id)
+    check_in_class = False
+    for clsp in participant.partclass.all():
+        for clsa in azmoon.azmoonclass.all():
+            if clsp.id == clsa.id:
+                check_in_class = True
+                break
+    if check_in_class:   
+        examiners = Examiner.objects.all().filter(azmoon__id = id)
+        tedad = len(examiners)
+        context = {'id':id,'examiners':examiners,'questions':question,'azmoon':azmoon,'tedad':tedad}
+        return render(request, 'natijeh_azmoon.html',context=context) 
+    else:
+        return HttpResponse("آزمون مورد نظر یافت نشد")        
+
+@login_required
+def change_semat(request,id):
+    participant = Participant.objects.all().get(mellicode = request.user)
+    pc = get_object_or_404(Part_class, id=id)
+    check_in_class = False
+    for cls in participant.partclass.all():
+        if pc.partclass.id == cls.id:
+            check_in_class = True
+            break
+    if check_in_class:
+        if pc.semat=="Ostad":
+            pc.semat = "daneshamoz"
+            pc.save()
+        else:
+            pc.semat = "Ostad"
+            pc.save()
+        return redirect('azmoon',pc.partclass.id)
+    else:
+        return HttpResponse("کاربر مورد نظر یافت نشد")

@@ -56,15 +56,19 @@ class Participant(AbstractUser):
     def __str__(self):
         return self.mellicode
 
-class Examiner(models.Model):
+class Part_class(models.Model):
     participant = models.ForeignKey(Participant,blank=True,on_delete=models.CASCADE)
     partclass = models.ForeignKey(Class,blank=True,null=True,on_delete=models.CASCADE)
-    azmoon = models.ForeignKey(Azmoon,blank=True,on_delete=models.CASCADE)
     SEMAT_CHOICES = (
         ('Ostad','Ostad'),
         ('daneshamoz','daneshamoz'),
     )
     semat = models.CharField(max_length=200 ,choices=SEMAT_CHOICES ,default = 'daneshamoz')
+
+class Examiner(models.Model):
+    participant = models.ForeignKey(Participant,blank=True,on_delete=models.CASCADE)
+    partclass = models.ForeignKey(Class,blank=True,null=True,on_delete=models.CASCADE)
+    azmoon = models.ForeignKey(Azmoon,blank=True,on_delete=models.CASCADE)
     percent_score = models.FloatField(default = 0,blank=True)
     score = models.FloatField(default = 0,blank=True)
     rank = models.IntegerField(default = 0,blank=True)
@@ -72,7 +76,9 @@ class Examiner(models.Model):
 class Question(models.Model):
     azmoon = models.ManyToManyField(Azmoon,blank=True)
     Q_text = models.TextField()
-    Q_image = models.ImageField(blank=True)
+    Q_image = models.ImageField(
+            blank=True,
+        )
     TYPE_CHOICES = (
         ('goz','chand gozineh ee'),
         ('tash','tashrihi'),

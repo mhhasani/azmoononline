@@ -42,7 +42,21 @@
                 <hr>
                 <h1>شرکت کننده ها:</h1>
                 {% for part in participants %}
-                    <h2><a href="{% url 'part' part.id %}">{{part.first_name}} {{part.last_name}}</a></h2>
+                    <h2><a href="{% url 'part' part.id %}">{{part.first_name}} {{part.last_name}} 
+                        {% for partclass in pc %}
+                            {% if partclass.participant.id == part.id %}
+                            ({{partclass.semat}})
+                            <div class="ui left secondary stackable menu">
+                                {%if partclass.semat == "Ostad"%}
+                                    <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به دانش آموز</a>
+                                {%else%}
+                                    <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به استاد</a>
+                                    {%endif%}
+                            </div>
+                            {%endif%}
+                        {% endfor %}
+                    </a></h2>
+
                 {% endfor %}
             </div>
             <div class="four wide column">
