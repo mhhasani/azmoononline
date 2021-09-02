@@ -36,6 +36,14 @@
                 <div class="extra content">
                     {{Class.participant_number}} شرکت کننده
                 </div>
+                {%for part in pc%}
+                    {%if part.partclass.id == Class.id%}
+                        <div class="extra content">
+                            {{part.semat}} 
+                        </div>
+                    {%endif%}    
+                {%endfor%}
+
             </a>
         {%endfor%}
                 </div>

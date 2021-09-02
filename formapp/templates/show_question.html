@@ -29,6 +29,14 @@
             {% else %}
             <a class="item" href="{% url 'activate_azmoon' id %}">بستن آزمون</a>
             {% endif %}
+            {% if azmoon.showable %}
+            <a class="item" href="{% url 'showable_azmoon' id %}">پنهان کردن آزمون</a>
+            {% else %}
+            <a class="item" href="{% url 'showable_azmoon' id %}">آشکار کردن آزمون</a>
+            {% endif %}
+            {% if azmoon.isactive %}
+            <a class="item" href="{% url 'sherkat_dar_azmoon' id %}">شرکت در آزمون</a>
+            {% endif %}
             <a class="item" href="{% url 'natijeh_azmoon' id %}">جدول نمره ها</a>
 
 
@@ -46,11 +54,6 @@
                 <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
                 <h3><hr></h3>
     {% endfor %} 
-    <h1>شرکت کننده های دیده:</h1>
-    {% for part in examiners %}
-        <h2><a href="{% url 'part' part.participant.id %}">{{part.participant.username}}</a></h2>
-    {% endfor %}
-    <!-- <a href="azmoon_1_participant.xlsx">اطلاعات شرکت کننده ها</a> -->
 </body>
 </html>
 {% endblock %}

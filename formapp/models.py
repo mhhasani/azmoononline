@@ -45,6 +45,7 @@ class Azmoon(models.Model):
     end_time = models.DateTimeField(blank=True,null=True)
     Question_number = models.IntegerField(default=0)
     isactive = models.BooleanField(default=False)
+    showable = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 

@@ -1,3 +1,5 @@
+from formapp.views import azmoon
+from formapp.views import showable_azmoon
 from formapp.views import change_semat
 from formapp.views import edit_azmoon
 from formapp.views import edit_class
@@ -28,6 +30,8 @@ urlpatterns = [
     path('edit_class/<int:id>/',edit_class, name='edit_class'),    
     path('edit_azmoon/<int:id>/',edit_azmoon, name='edit_azmoon'),    
     path('activate_azmoon/<int:id>/',activate_azmoon, name='activate_azmoon'),    
+    path('azmoon/<int:id>/',azmoon, name='sherkat_dar_azmoon'),    
+    path('showable_azmoon/<int:id>/',showable_azmoon, name='showable_azmoon'),    
     path('change_semat/<int:id>/',change_semat, name='change_semat'),    
     path('accounts/', include('formapp.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 

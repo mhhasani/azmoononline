@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Participant{% endblock %}
+{%block titr%}آزمون {{azmoon.name}}{% endblock %}  
+
+<body>
+{% block main%} 
+<html lang="en">
+<head>    
+    <meta charset="UTF-8">    
+    <title>Index</title>
+</head>
+
+<body dir = 'rtl'>
+    <h1> سوالات:</h1>
+    {% for quest in questions %}
+                <h1>{{quest.Q_text}}</h1>
+                <img src=""><br>
+                <input type="radio" name="answer" id="answer">{{quest.answer1}}<br>
+                <input type="radio" name="answer" id="answer">{{quest.answer2}}<br>
+                <input type="radio" name="answer" id="answer">{{quest.answer3}}<br>
+                <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
+                <h3><hr></h3>
+    {% endfor %} 
+</body>
+</html>
+{% endblock %}
