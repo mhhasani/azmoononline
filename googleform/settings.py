@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'formapp',
+    "bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,5 @@ LOGIN_REDIRECT_URL = 'class'
 LOGOUT_REDIRECT_URL = 'Home' 
 AUTH_USER_MODEL = 'formapp.Participant'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR , 'media')

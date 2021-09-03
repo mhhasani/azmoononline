@@ -10,9 +10,10 @@ from formapp.views import Profile
 from formapp.views import add_azmoon2,natijeh_azmoon
 from formapp.views import Home, show_participant,show_azmoon, show_questions,add_question,edit_question,signup,activate_azmoon
 from django.contrib import admin 
-from django.urls import  path , include
+from django.urls import path, include # new
 from django.views.generic.base import TemplateView
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,4 +38,4 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')), 
     path('Profile/', Profile , name = 'Profile'),
     path('',TemplateView.as_view(template_name='Home.html'),name='Home'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

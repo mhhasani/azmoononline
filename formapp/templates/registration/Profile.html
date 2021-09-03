@@ -11,9 +11,11 @@
 </div>
 <br>
 <form method="POST" class="post-form" dir = 'ltr'>{% csrf_token %}
-    {{ form.as_p }}
+    {% csrf_token %}
+    <table border="1">
+    {{ form }}
+    </table>
     <button type="submit" class="save btn btn-default" >Save</button>
 </form>
-
 {% endblock %}
 </body>

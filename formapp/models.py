@@ -79,6 +79,8 @@ class Question(models.Model):
     Q_text = models.TextField()
     Q_image = models.ImageField(
             blank=True,
+            upload_to='questions_image',
+            default = 'questions_image/8.jpg'
         )
     TYPE_CHOICES = (
         ('goz','chand gozineh ee'),

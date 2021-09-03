@@ -5,10 +5,13 @@
 {% block body %}
 <div dir="ltr">
 <h2>Log In</h2>
-<form method="post">
+<form method="post" novalidate>
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
+  <table border="1">
+  {{ form }}
+  </table>
+  <br>
+  <button type="submit">log in</button>
 </form>
 <br>
 <a href="{% url 'signup' %}">ثبت نام</a>

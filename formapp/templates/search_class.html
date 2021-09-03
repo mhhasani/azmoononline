@@ -7,7 +7,10 @@
 {% block main%} 
 <h5 dir = 'rtl'>کد 10 رقمی کلاس مورد نظر را وارد کنید</h5>
 <form method="POST" class="post-form" dir = 'rtl'>{% csrf_token %}
-    {{ form.as_p }}
+    {% csrf_token %}
+    <table border="1">
+    {{ form }}
+    </table>
     <button type="submit" class="save btn btn-default" >Join</button>
 </form>
 {% endblock %}

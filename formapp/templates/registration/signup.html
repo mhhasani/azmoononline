@@ -5,9 +5,11 @@
 {% block body %}
 <div dir="ltr">
   <h2>Sign up</h2>
-  <form method="post">
+  <form method="post" novalidate>
     {% csrf_token %}
-    {{ form.as_p }}
+    <table border="1">
+    {{ form }}
+    </table>
     <button type="submit">Sign Up</button>
   </form>
 </div>

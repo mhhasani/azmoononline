@@ -46,13 +46,14 @@
     <h1> سوالات:</h1>
     <br>
     {% for quest in questions %}
-                <a href="{% url 'edit_question' quest.id id %}"><h1>{{quest.Q_text}}</h1></a>
-                <img src=""><br>
-                <input type="radio" name="answer" id="answer">{{quest.answer1}}<br>
-                <input type="radio" name="answer" id="answer">{{quest.answer2}}<br>
-                <input type="radio" name="answer" id="answer">{{quest.answer3}}<br>
-                <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
-                <h3><hr></h3>
+        <a href="{% url 'edit_question' quest.id id %}"><h1>{{quest.Q_text}}</h1></a>
+        <img src="{{quest.Q_image}}">
+        <br>
+        {{quest.answer1}}<br>
+        {{quest.answer2}}<br>
+        {{quest.answer3}}<br>
+        {{quest.answer4}}<br>
+        <h3><hr></h3>
     {% endfor %} 
 </body>
 </html>
