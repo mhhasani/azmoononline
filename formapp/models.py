@@ -101,3 +101,16 @@ class Question(models.Model):
 
     def __str__(self):
         return "Question " + str(self.id)
+
+class Answer(models.Model):
+    examiner = models.ForeignKey(Examiner,blank=True,null=True,on_delete=models.CASCADE)
+    participant = models.ForeignKey(Participant,blank=True,on_delete=models.CASCADE)
+    question = models.ForeignKey(Question,blank=True,on_delete=models.CASCADE)
+    ANSWER_CJOICES = (
+        ('', '---Please select your choice---'),
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+    )
+    answer = models.CharField(max_length=200,choices=ANSWER_CJOICES,null=True)

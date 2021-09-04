@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block title %}Participant{% endblock %}
 {%block titr%}آزمون {{azmoon.name}}{% endblock %}  
 
@@ -13,15 +12,30 @@
 
 <body dir = 'rtl'>
     <h1> سوالات:</h1>
-    {% for quest in questions %}
-                <h1>{{quest.Q_text}}</h1>
-                <img src="{{quest.Q_image}}"><br>
-                <input type="radio" name="answer" id="answer">{{quest.answer1}}<br>
-                <input type="radio" name="answer" id="answer">{{quest.answer2}}<br>
-                <input type="radio" name="answer" id="answer">{{quest.answer3}}<br>
-                <input type="radio" name="answer" id="answer">{{quest.answer4}}<br>
+        <!-- <h1>{{question.Q_text}}</h1>
+        <img src="{{questions.i.Q_image}}"><br>
+        <input type="radio" name="answer" id="answer">{{question.answer1}}<br>
+        <input type="radio" name="answer" id="answer">{{question.answer2}}<br>
+        <input type="radio" name="answer" id="answer">{{question.answer3}}<br>
+        <input type="radio" name="answer" id="answer">{{question.answer4}}<br> -->
+        <form method="POST" class="post-form" dir = 'rtl'>
+            {% csrf_token %}
+            {{ forms.management_form }}
+            {% for FQ in qf %}
+                <h1>{{FQ.1.Q_text}}</h1>
+                <img src="{{FQ.1.Q_image}}"><br>
+                {{FQ.1.answer1}}<br>
+                {{FQ.1.answer2}}<br>
+                {{FQ.1.answer3}}<br>
+                {{FQ.1.answer4}}<br>
+                {{ FQ.0.as_p }}
                 <h3><hr></h3>
-    {% endfor %} 
+            {% endfor %}
+            <button type="submit" class="save btn btn-default" >ذخيره تغييرات</button> 
+            <button type="submit" class="save btn btn-default" >پايان آزمون</button> 
+
+        </form>
+
 </body>
 </html>
 {% endblock %}

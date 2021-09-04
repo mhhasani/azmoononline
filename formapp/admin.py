@@ -22,6 +22,10 @@ class ClassInline(admin.StackedInline):
     model = Class
     extra = 0
 
+class AnswerInline(admin.StackedInline):
+    model = Answer
+    extra = 0
+
 @admin.register(Class)
 class ClassAdmin(admin.ModelAdmin):
     list_display = ['id','name','address','participant_number','azmoon_number']
@@ -82,7 +86,12 @@ class ParticipantAdmin(DefaultUserAdmin):
 @admin.register(Examiner)
 class ExaminerAdmin(admin.ModelAdmin):
     list_display = ['id','participant','partclass','azmoon','percent_score']
+    inlines = [AnswerInline]
 
 @admin.register(Part_class)
 class ExaminerAdmin(admin.ModelAdmin):
     list_display = ['id','participant','partclass','semat']
+
+@admin.register(Answer)
+class SDAzmoonAdmin(admin.ModelAdmin):
+    list_display = ['id','participant','question','answer']

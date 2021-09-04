@@ -70,9 +70,21 @@ class QuestionForm(forms.Form):
     answer3 = forms.CharField(initial="گزینه 3",required=False)
     answer4 = forms.CharField(initial="گزینه 4",required=False)
     ANSWER_CJOICES = (
+        ('', '---Please select your choice---'),
         ('1','1'),
         ('2','2'),
         ('3','3'),
         ('4','4'),
     )
     correct_answer = ChoiceField(choices=ANSWER_CJOICES)
+
+class Azmoon_Form(forms.Form):
+    ANSWER_CJOICES = (
+        ('', '---Please select your choice---'),
+        ('1','1'),
+        ('2','2'),
+        ('3','3'),
+        ('4','4'),
+    )
+    answer = ChoiceField(choices=ANSWER_CJOICES)
+
