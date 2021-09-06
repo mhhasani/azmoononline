@@ -85,11 +85,11 @@ class ParticipantAdmin(DefaultUserAdmin):
 
 @admin.register(Examiner)
 class ExaminerAdmin(admin.ModelAdmin):
-    list_display = ['id','participant','partclass','azmoon','percent_score']
+    list_display = ['id','participant','partclass','azmoon','percent_score','end_time']
     inlines = [AnswerInline]
 
 @admin.register(Part_class)
-class ExaminerAdmin(admin.ModelAdmin):
+class Part_classAdmin(admin.ModelAdmin):
     list_display = ['id','participant','partclass','semat']
 
 @admin.register(Answer)

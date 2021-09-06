@@ -4,6 +4,7 @@ from django.forms.models import ModelMultipleChoiceField
 from .models import *
 from django import forms
 from django.core.validators import MinLengthValidator
+from django.utils import timezone
 
 # class ParticipantForm(forms.ModelForm):
 #     class Meta:
@@ -48,8 +49,8 @@ class SignUpForm(UserCreationForm):
 
 class AzmoonForm2(forms.Form):
     name = forms.CharField()
-    start_time = forms.DateTimeField(required=False)
-    end_time = forms.DateTimeField(required=False)
+    start_time = forms.SplitDateTimeField(initial=timezone.now,required=False)
+    end_time = forms.SplitDateTimeField(initial=timezone.now,required=False)
 
 class ClassForm(forms.Form):
     name = forms.CharField()

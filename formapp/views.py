@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from openpyxl import Workbook
 from django.shortcuts import get_object_or_404
 from django.forms import formset_factory
+from django.utils import timezone
 
 @csrf_exempt
 def signup(request):
@@ -243,9 +244,7 @@ def add_class(request):
 
 @login_required
 def add_question(request,id):
-    question = Question.objects.all().filter(azmoon__id=id).values()
     participant = Participant.objects.all().get(mellicode = request.user)
-    # azmoon = Azmoon.objects.all().get(id=id)
     azmoon = get_object_or_404(Azmoon, id=id)
     check_in_azmoon = False
     for classes in participant.partclass.all():
@@ -266,16 +265,16 @@ def add_question(request,id):
             form = QuestionForm(request.POST)
             context = {'form': form,'id':id,'azmoon':azmoon2}
             if form.is_valid():
-                question = Question.objects.create()
-                question.Q_text = form.cleaned_data['Q_text']
-                question.Q_image = form.cleaned_data['Q_image']
-                question.answer1 = form.cleaned_data['answer1']
-                question.answer2 = form.cleaned_data['answer2']
-                question.answer3 = form.cleaned_data['answer3']
-                question.answer4 = form.cleaned_data['answer4']
-                question.correct_answer = form.cleaned_data['correct_answer']
-                question.azmoon.set(azmoon)
-                question.save()
+                q = Question.objects.create()
+                q.Q_text = form.cleaned_data['Q_text']
+                q.Q_image = form.cleaned_data['Q_image']
+                q.answer1 = form.cleaned_data['answer1']
+                q.answer2 = form.cleaned_data['answer2']
+                q.answer3 = form.cleaned_data['answer3']
+                q.answer4 = form.cleaned_data['answer4']
+                q.correct_answer = form.cleaned_data['correct_answer']
+                q.azmoon.set(azmoon)
+                q.save()
                 return redirect('quest',id)
             else:
                 return render(request, 'add_question.html' ,context=context)   
@@ -473,7 +472,7 @@ def natijeh_azmoon(request,id):
             nazade = 0
             an = Answer.objects.all().filter(examiner__id=examiner.id)
             for answer in an:
-                if answer.answer == '':
+                if answer.answer == None:
                     nazade +=1
                 elif answer.answer == answer.question.correct_answer:
                     sahih +=1
@@ -521,51 +520,31 @@ def azmoon(request,id):
     question = Question.objects.all().filter(azmoon__id=id).values()
     participant = Participant.objects.all().get(mellicode = request.user)
     azmoon = get_object_or_404(Azmoon, id=id)
-    examiner = Examiner.objects.all().filter(participant = participant).filter(azmoon=azmoon)
-    length = azmoon.Question_number
-    check_in_class = False
-    for clsp in participant.partclass.all():
-        for clsa in azmoon.azmoonclass.all():
-            if clsp.id == clsa.id:
-                check_in_class = True
-                break
-    qf =[]
-    if check_in_class:
-        if request.method == "GET":
-            QuestionFormSet = formset_factory(Azmoon_Form,extra=length)
-            QQ = QuestionFormSet()
-            for i in range(length):
-                Quest = Question.objects.all().get(id = question[i]['id'])
-                qf.append([QQ[i],Quest])
-            if not examiner:
-                exam = Examiner.objects.create(
-                    participant = participant,
-                    azmoon = azmoon,
-                )
-                exam.save() 
-            q = Question.objects.all().filter(azmoon__id=azmoon.id)
-            a = Azmoon.objects.all().get(id = azmoon.id)
-            a.Question_number = q.count()
-            a.save()
-            azmoon.Question_number = q.count()
-            azmoon.save()
-            length = azmoon.Question_number
-            context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QuestionFormSet,'Len':length,'qf':qf}
-            if not azmoon.isactive:
-                return HttpResponse("آزمون هنوز شروع نشده است!")   
-            return render(request, 'azmoon.html', context=context)
-        if request.method == "POST":
-            QuestionFormSet = formset_factory(Azmoon_Form,extra=len(question))
-            QQ = QuestionFormSet(request.POST)
-            context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QQ,'Len':length,'qf':qf}
-            if QQ.is_valid():
+    length = question.count()
+    if azmoon.start_time==None or azmoon.end_time==None or(azmoon.start_time<timezone.now() and azmoon.start_time>timezone.now()):
+        examiner = Examiner.objects.all().filter(participant = participant).filter(azmoon=azmoon)
+        check_in_class = False
+        for clsp in participant.partclass.all():
+            for clsa in azmoon.azmoonclass.all():
+                if clsp.id == clsa.id:
+                    check_in_class = True
+                    break
+        qf =[]
+        if check_in_class:
+            if request.method == "GET":
+                QuestionFormSet = formset_factory(Azmoon_Form,extra=length)
+                QQ = QuestionFormSet()
+                if not examiner:
+                    exam = Examiner.objects.create(
+                        participant = participant,
+                        azmoon = azmoon,
+                    )
+                    exam.save() 
                 for i in range(length):
-                    cd = QQ[i].cleaned_data
                     Quest = Question.objects.all().get(id = question[i]['id'])
                     a = Answer.objects.all().filter(participant = participant,question = Quest , examiner__id=examiner.get().id)
                     if a:
                         c = Answer.objects.all().get(participant = participant,question = Quest, examiner=examiner.get())
-                        c.answer = cd.get('answer')
                         c.examiner = examiner.get()
                         c.save()
                     else:
@@ -573,10 +552,48 @@ def azmoon(request,id):
                             participant = participant,
                             question = Quest
                         )
-                        answer.answer = cd.get('answer')
                         answer.examiner = examiner.get()
-                        answer.save() 
+                        answer.save()
                     qf.append([QQ[i],Quest])
+                q = Question.objects.all().filter(azmoon__id=azmoon.id)
+                a = Azmoon.objects.all().get(id = azmoon.id)
+                a.Question_number = q.count()
+                a.save()
+                azmoon.Question_number = q.count()
+                azmoon.save()
+                length = azmoon.Question_number
+                context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QuestionFormSet,'Len':length,'qf':qf}
+                if not azmoon.isactive:
+                    return HttpResponse("آزمون هنوز شروع نشده است!")   
                 return render(request, 'azmoon.html', context=context)
+            if request.method == "POST":
+                QuestionFormSet = formset_factory(Azmoon_Form,extra=len(question))
+                QQ = QuestionFormSet(request.POST)
+                context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QQ,'Len':length,'qf':qf}
+                c = examiner.get()
+                c.end_time = timezone.now()
+                c.save()
+                if QQ.is_valid():
+                    for i in range(length):
+                        cd = QQ[i].cleaned_data
+                        Quest = Question.objects.all().get(id = question[i]['id'])
+                        a = Answer.objects.all().filter(participant = participant,question = Quest , examiner__id=examiner.get().id)
+                        # if a:
+                        c = Answer.objects.all().get(participant = participant,question = Quest, examiner=examiner.get())
+                        c.answer = cd.get('answer')
+                        c.examiner = examiner.get()
+                        c.save()
+                        # else:
+                        #     answer = Answer.objects.create(
+                        #         participant = participant,
+                        #         question = Quest
+                        #     )
+                        #     answer.answer = cd.get('answer')
+                        #     answer.examiner = examiner.get()
+                        #     answer.save() 
+                        qf.append([QQ[i],Quest])
+                    return render(request, 'azmoon.html', context=context)
+        else:
+            return HttpResponse("آزمون یافت نشد")    
     else:
-        return HttpResponse("آزمون یافت نشد")    
+        return HttpResponse(azmoon.start_time-timezone.now())    

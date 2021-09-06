@@ -47,7 +47,7 @@
     <br>
     {% for quest in questions %}
         <a href="{% url 'edit_question' quest.id id %}"><h1>{{quest.Q_text}}</h1></a>
-        <img src="{{quest.Q_image}}">
+        <img src="/media/{{quest.Q_image}}" alt="{{quest.Q_image}}">
         <br>
         {{quest.answer1}}<br>
         {{quest.answer2}}<br>

@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from random import randint
 from django.contrib.postgres.fields import ArrayField
+from django_jalali.db import models as jmodels
+
 
 
 # class Participant(models.Model):
@@ -73,14 +75,15 @@ class Examiner(models.Model):
     percent_score = models.FloatField(default = 0,blank=True)
     score = models.FloatField(default = 0,blank=True)
     rank = models.IntegerField(default = 0,blank=True)
+    end_time = models.DateTimeField(blank=True,null=True)
+
 
 class Question(models.Model):
     azmoon = models.ManyToManyField(Azmoon,blank=True)
     Q_text = models.TextField()
     Q_image = models.ImageField(
-            blank=True,
             upload_to='questions_image',
-            default = 'questions_image/8.jpg'
+            default = 'questions_image/8.jpeg'
         )
     TYPE_CHOICES = (
         ('goz','chand gozineh ee'),
