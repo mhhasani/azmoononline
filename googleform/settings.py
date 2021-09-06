@@ -128,3 +128,5 @@ AUTH_USER_MODEL = 'formapp.Participant'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
+
+ALLOWED_HOSTS = ['*']
