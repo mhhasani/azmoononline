@@ -46,13 +46,15 @@
                         {% for partclass in pc %}
                             {% if partclass.participant.id == part.id %}
                             ({{partclass.semat}})
-                            <div class="ui left secondary stackable menu">
-                                {%if partclass.semat == "Ostad"%}
-                                    <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به دانش آموز</a>
-                                {%else%}
-                                    <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به استاد</a>
+                            {% if class.owner != partclass.participant.id %}
+                                <div class="ui left secondary stackable menu">
+                                    {%if partclass.semat == "Ostad"%}
+                                        <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به دانش آموز</a>
+                                    {%elif partclass.semat == "daneshamoz"%}
+                                        <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به استاد</a>
                                     {%endif%}
-                            </div>
+                                </div>
+                            {%endif%}
                             {%endif%}
                         {% endfor %}
                     </a></h2>

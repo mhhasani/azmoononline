@@ -161,7 +161,7 @@ def show_azmoon(request,id):
             ws.append([part['id'],part['first_name'],part['last_name'],part['phone_number'],part['mellicode']])
         wb.save(f"class_{id}_participant.xlsx")
         pc = Part_class.objects.all().filter(partclass__id=id)
-        context = {'participants':participants,'id':id,'azmoon':azmoon,'class':cls,'pc':pc}
+        context = {'participants':participants,'id':id,'azmoon':azmoon,'class':cls,'pc':pc,'participant':participant}
         return render(request, 'show_azmoon.html', context=context)
     else:
         return HttpResponse("کلاس یافت نشد")
@@ -500,11 +500,16 @@ def change_semat(request,id):
     participant = Participant.objects.all().get(mellicode = request.user)
     pc = get_object_or_404(Part_class, id=id)
     check_in_class = False
+    clsid = -1
     for cls in participant.partclass.all():
         if pc.partclass.id == cls.id:
             check_in_class = True
+            clsid = cls.id
             break
     if check_in_class:
+        cls = Class.objects.all().get(id=clsid)
+        if pc.participant.id == cls.owner:
+            return HttpResponse("تغییر نقش مالک کلاس ممکن نیست")
         if pc.semat=="Ostad":
             pc.semat = "daneshamoz"
             pc.save()
@@ -521,7 +526,7 @@ def azmoon(request,id):
     participant = Participant.objects.all().get(mellicode = request.user)
     azmoon = get_object_or_404(Azmoon, id=id)
     length = question.count()
-    if azmoon.start_time==None or azmoon.end_time==None or(azmoon.start_time<timezone.now() and azmoon.start_time>timezone.now()):
+    if azmoon.start_time==None or azmoon.end_time==None or(azmoon.start_time<timezone.now() and azmoon.end_time > timezone.now()):
         examiner = Examiner.objects.all().filter(participant = participant).filter(azmoon=azmoon)
         check_in_class = False
         for clsp in participant.partclass.all():
