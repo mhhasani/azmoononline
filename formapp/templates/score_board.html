@@ -5,7 +5,7 @@
 <head>
     <title>
     
-    نتیجه آزمون
+    جدول نمرات
     
 </title>
     <meta name="description"
@@ -183,6 +183,7 @@
     </tr>
 
 
+    {%for examiner in examiners%}
             
             </thead>
 
@@ -211,6 +212,7 @@
         <span class="humanize_duration" data-duration="0"></span>
     </td>
     <td>{{examiner.percent_score}}</td>
+    {% endfor %}
 
                 </tr>
             
@@ -221,6 +223,7 @@
             <tr>
                 <th colspan="42">
                     
+    {{tedad}} نفر
 
                 </th>
             </tr>

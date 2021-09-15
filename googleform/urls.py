@@ -1,3 +1,4 @@
+from formapp.views import natijeh_azmoon
 from formapp.views import score_board
 from formapp.views import finish_azmoon
 from formapp.views import azmoon
@@ -28,6 +29,7 @@ urlpatterns = [
     path('show_question/<int:id>/',show_questions,name='quest'),
     path('add_azmoon/<int:id>/',add_azmoon2, name='add_azmoon'),
     path('score_board/<int:id>/',score_board, name='score_board'),
+    path('natijeh_azmoon/<int:id>/',natijeh_azmoon, name='natijeh_azmoon'),
     path('add_class/',add_class, name='add_class'),
     path('add_question/<int:id>/',add_question, name='add_question'),
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
