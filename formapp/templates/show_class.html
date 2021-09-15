@@ -13,8 +13,6 @@
 
                 
     <div class="ui small secondary stackable menu ca-title">
-
-
         <div class="ui left secondary stackable menu">
             <a class="item" href="{% url 'add_class' %}">ایجاد کلاس جدید</a>
             <a class="item" href="{% url 'search_class' %}">اضافه شدن به کلاس</a>            
@@ -31,17 +29,20 @@
                     <div class="header">{{Class.name}}</div>
                 </div>
                 <div class="extra content">
-                    {{Class.azmoon_number}} آزمون
-                </div>
-                <div class="extra content">
                     {{Class.participant_number}} شرکت کننده
                 </div>
                 {%for part in pc%}
+ 
                     {%if part.partclass.id == Class.id%}
+                        {%if part.semat == 'Ostad'%}
+                            <div class="extra content">
+                                {{Class.azmoon_number}} آزمون
+                            </div>
+                        {%endif%}  
                         <div class="extra content">
                             {{part.semat}} 
                         </div>
-                    {%endif%}    
+                    {%endif%} 
                 {%endfor%}
 
             </a>

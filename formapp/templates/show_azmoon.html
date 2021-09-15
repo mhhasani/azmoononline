@@ -5,7 +5,7 @@
 
 <body>
 {% block main%} 
-    
+    {% if check_is_ostad%}
     <div id="body_container">
         <h1>لینک کلاس: <a href="{% url 'join_class' class.address %}">{{class.address}}</a></h1>        
     <div class="ui container">
@@ -22,9 +22,10 @@
             <a class="item" href="{% url 'edit_class' id %}">ویرایش کلاس</a>
         </div>
     </div>
-                <div class="ui four stackable cards">
-
+    {%endif%}
+    <div class="ui three stackable cards">
         {%for az in azmoon %}
+            {%if az.showable or check_is_ostad %}
                 <a class="ui small link card course-card" href= "{% url 'quest' az.id %}">
                     <div class="image">
                         <img src="https://static.quera.ir/overview/course-images/11-small.0-b062dbbb9f04.jpg">
@@ -33,9 +34,28 @@
                         <div class="header">{{az.name}}</div>
                     </div>
                     <div class="extra content">
-                            {{az.Question_number}} سوال
+                        {%if az.isactive%}
+                            در حال برگزاری
+                        {%else%}
+                            آزمون فعال نیست
+                        {%endif%}
                     </div>
+                        {% if check_is_ostad%}
+                        <div class="extra content">
+                            {{az.Question_number}} سوال
+                        </div>
+                        {%endif%}
+                        {% if check_is_ostad%}
+                        <div class="extra content">
+                            {%if az.showable%}
+                                آشکار
+                            {%else%}
+                                پنهان
+                            {%endif%}
+                        </div>
+                        {%endif%}
                 </a>
+            {%endif%}
         {%endfor%}
 
                 </div>
@@ -47,6 +67,7 @@
                             {% if partclass.participant.id == part.id %}
                             ({{partclass.semat}})
                             {% if class.owner != partclass.participant.id %}
+                            {% if class.owner == participant.id%}                           
                                 <div class="ui left secondary stackable menu">
                                     {%if partclass.semat == "Ostad"%}
                                         <a class="item" href="{% url 'change_semat' partclass.id %}">تبدیل به دانش آموز</a>
@@ -56,9 +77,9 @@
                                 </div>
                             {%endif%}
                             {%endif%}
+                            {%endif%}
                         {% endfor %}
                     </a></h2>
-
                 {% endfor %}
             </div>
             <div class="four wide column">

@@ -21,7 +21,7 @@
 
 
         <div class="ui left secondary stackable menu">
-            
+            {% if check_is_ostad%}
             <a class="item" href="{% url 'add_question' id %}">اضافه کردن سوال</a>
             <a class="item" href="{% url 'edit_azmoon' id %}">ویرایش آزمون</a>
             {% if not azmoon.isactive %}
@@ -34,14 +34,14 @@
             {% else %}
             <a class="item" href="{% url 'showable_azmoon' id %}">آشکار کردن آزمون</a>
             {% endif %}
-            {% if azmoon.isactive %}
-            <a class="item" href="{% url 'sherkat_dar_azmoon' id %}">شرکت در آزمون</a>
             {% endif %}
-            <a class="item" href="{% url 'natijeh_azmoon' id %}">جدول نمره ها</a>
+            <a class="item" href="{% url 'sherkat_dar_azmoon' id %}">شرکت در آزمون</a>
+            <a class="item" href="{% url 'score_board' id %}">جدول نمره ها</a>
 
 
         </div>
     </div>
+{% if check_is_ostad%}
 <body dir = 'rtl'>
     <h1> سوالات:</h1>
     <br>
@@ -56,5 +56,6 @@
         <h3><hr></h3>
     {% endfor %} 
 </body>
+{%endif%}
 </html>
 {% endblock %}

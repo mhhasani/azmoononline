@@ -76,6 +76,7 @@ class Examiner(models.Model):
     score = models.FloatField(default = 0,blank=True)
     rank = models.IntegerField(default = 0,blank=True)
     end_time = models.DateTimeField(blank=True,null=True)
+    Finished = models.BooleanField(default=False)
 
 
 class Question(models.Model):
