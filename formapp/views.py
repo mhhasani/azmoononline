@@ -94,10 +94,6 @@ def show_class(request):
         Class.participant_number = part.count()
         Class.azmoon_number = az.count()
         Class.save()
-    # for azmoon in participant.azmoon.all():
-    #     q = Question.objects.all().filter(azmoon__id=azmoon.id)
-    #     azmoon.Question_number = q.count()
-    #     azmoon.save()
     context = {'participant':participant,'pc':pc}
     return render(request, 'show_class.html', context=context)
 
@@ -717,19 +713,10 @@ def azmoon(request,id):
                         cd = QQ[i].cleaned_data
                         Quest = Question.objects.all().get(id = question[i]['id'])
                         a = Answer.objects.all().filter(participant = participant,question = Quest , examiner__id=examiner.get().id)
-                        # if a:
                         c = Answer.objects.all().get(participant = participant,question = Quest, examiner=examiner.get())
                         c.answer = cd.get('answer')
                         c.examiner = examiner.get()
                         c.save()
-                        # else:
-                        #     answer = Answer.objects.create(
-                        #         participant = participant,
-                        #         question = Quest
-                        #     )
-                        #     answer.answer = cd.get('answer')
-                        #     answer.examiner = examiner.get()
-                        #     answer.save() 
                         qf.append([QQ[i],Quest])
                     return render(request, 'azmoon.html', context=context)
         else:
@@ -788,6 +775,3 @@ def finish_azmoon_all(request,id):
             azmoon.showable=True
             azmoon.Finished=False
             azmoon.save()
-            # examin = Examiner.objects.all().get(participant = participant, azmoon=azmoon)
-            # examin.Finished = False
-            # examin.save()

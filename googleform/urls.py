@@ -13,7 +13,7 @@ from formapp.views import add_class
 from formapp.views import show_class
 from formapp.views import Profile
 from formapp.views import add_azmoon2
-from formapp.views import Home, show_participant,show_azmoon, show_questions,add_question,edit_question,signup
+from formapp.views import show_participant,show_azmoon, show_questions,add_question,edit_question
 from django.contrib import admin 
 from django.urls import path, include # new
 from django.views.generic.base import TemplateView
