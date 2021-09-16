@@ -16,30 +16,37 @@
         <div class="ui stackable grid">
             <div class="twelve wide column">
 
-                
+    {% if check_is_ostad%}
     <div class="ui small secondary stackable menu ca-title">
 
-
         <div class="ui left secondary stackable menu">
-            {% if check_is_ostad%}
             <a class="item" href="{% url 'add_question' id %}">اضافه کردن سوال</a>
             <a class="item" href="{% url 'edit_azmoon' id %}">ویرایش آزمون</a>
-            {% if not azmoon.isactive %}
-            <a class="item" href="{% url 'activate_azmoon' id %}">فعالسازی آزمون</a>
+            {% if not azmoon.isactive_score_board %}
+            <a class="item" href="{% url 'activate_score_board' id %}" >فعالسازی جدول امتیازات</a>
             {% else %}
-            <a class="item" href="{% url 'activate_azmoon' id %}">بستن آزمون</a>
+            <a class="item" href="{% url 'activate_score_board' id %}" >پنهان کردن جدول امتیازات</a>
+            {% endif %}
+            {% if not azmoon.isactive_natijeh %}
+            <a class="item" href="{% url 'activate_natijeh' id %}">فعالسازی نتیجه آزمون</a>
+            {% else %}
+            <a class="item" href="{% url 'activate_natijeh' id %}">پنهان کردن نتیجه آزمون</a>
             {% endif %}
             {% if azmoon.showable %}
             <a class="item" href="{% url 'showable_azmoon' id %}">پنهان کردن آزمون</a>
             {% else %}
             <a class="item" href="{% url 'showable_azmoon' id %}">آشکار کردن آزمون</a>
             {% endif %}
-            {% endif %}
-            <a class="item" href="{% url 'sherkat_dar_azmoon' id %}">شرکت در آزمون</a>
-            <a class="item" href="{% url 'score_board' id %}">جدول نمره ها</a>
-
-
         </div>
+    </div>
+    {% endif %}
+
+    <div class="ui small secondary stackable menu ca-title">
+    <div class="ui left secondary stackable menu">
+        <a class="item" href="{% url 'sherkat_dar_azmoon' id %}">شرکت در آزمون</a>
+        <a class="item" href="{% url 'natijeh_azmoon' id %}">نتیجه آزمون</a>
+        <a class="item" href="{% url 'score_board' id %}">جدول نمره ها</a>
+    </div>
     </div>
 {% if check_is_ostad%}
 <body dir = 'rtl'>

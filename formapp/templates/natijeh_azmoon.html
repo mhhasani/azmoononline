@@ -227,7 +227,25 @@
             </tfoot>
         </table>
     </div>
-
+    {%for a in answers%}
+        {%if a.answer == a.question.correct_answer%}
+        <h1 style="color:green;">{{a.question.Q_text}}</h1>
+        {%elif a.answer != a.question.correct_answer and a.answer != None%}
+        <h1 style="color:red;">{{a.question.Q_text}}</h1>
+        {%else%}  
+        <h1>{{a.question.Q_text}}</h1> 
+        {%endif%}     
+        <img src="{{a.question.Q_image}}"><br>
+        {{a.question.answer1}}<br>
+        {{a.question.answer2}}<br>
+        {{a.question.answer3}}<br>
+        {{a.question.answer4}}<br>
+        <h2>گزینه صحیح:{{a.question.correct_answer}}</h2>
+        {%if a.answer != None%}
+        <h2>گزینه زده شده:{{a.answer}}</h2>
+        {%endif%}
+        <h3><hr></h3>        
+    {%endfor%}
     <script type="text/javascript">
         $('.humanize_duration').each(function () {
             var e = $(this);

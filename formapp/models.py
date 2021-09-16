@@ -43,11 +43,13 @@ class Class(models.Model):
 class Azmoon(models.Model):
     azmoonclass = ManyToManyField(Class,blank=True)
     name = models.CharField(max_length=200)
-    start_time = models.DateTimeField(blank=True,null=True)
-    end_time = models.DateTimeField(blank=True,null=True)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
     Question_number = models.IntegerField(default=0)
-    isactive = models.BooleanField(default=False)
+    isactive_natijeh = models.BooleanField(default=False)
+    isactive_score_board = models.BooleanField(default=False)
     showable = models.BooleanField(default=False)
+    Finished = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 

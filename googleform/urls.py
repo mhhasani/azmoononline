@@ -1,3 +1,5 @@
+from formapp.views import activate_score_board
+from formapp.views import activate_natijeh
 from formapp.views import natijeh_azmoon
 from formapp.views import score_board
 from formapp.views import finish_azmoon
@@ -11,7 +13,7 @@ from formapp.views import add_class
 from formapp.views import show_class
 from formapp.views import Profile
 from formapp.views import add_azmoon2
-from formapp.views import Home, show_participant,show_azmoon, show_questions,add_question,edit_question,signup,activate_azmoon
+from formapp.views import Home, show_participant,show_azmoon, show_questions,add_question,edit_question,signup
 from django.contrib import admin 
 from django.urls import path, include # new
 from django.views.generic.base import TemplateView
@@ -35,7 +37,8 @@ urlpatterns = [
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
     path('edit_class/<int:id>/',edit_class, name='edit_class'),    
     path('edit_azmoon/<int:id>/',edit_azmoon, name='edit_azmoon'),    
-    path('activate_azmoon/<int:id>/',activate_azmoon, name='activate_azmoon'),    
+    path('activate_natijeh/<int:id>/',activate_natijeh, name='activate_natijeh'),    
+    path('activate_score_board/<int:id>/',activate_score_board, name='activate_score_board'),    
     path('finish_azmoon/<int:id>/',finish_azmoon, name='finish_azmoon'),    
     path('azmoon/<int:id>/',azmoon, name='sherkat_dar_azmoon'),    
     path('showable_azmoon/<int:id>/',showable_azmoon, name='showable_azmoon'),    

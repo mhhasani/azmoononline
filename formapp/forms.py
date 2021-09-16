@@ -49,8 +49,8 @@ class SignUpForm(UserCreationForm):
 
 class AzmoonForm2(forms.Form):
     name = forms.CharField()
-    start_time = forms.SplitDateTimeField(initial=timezone.now,required=False)
-    end_time = forms.SplitDateTimeField(initial=timezone.now,required=False)
+    start_time = forms.SplitDateTimeField(initial=timezone.now)
+    end_time = forms.SplitDateTimeField(initial=timezone.now)
 
 class ClassForm(forms.Form):
     name = forms.CharField()

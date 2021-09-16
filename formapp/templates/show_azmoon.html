@@ -34,7 +34,7 @@
                         <div class="header">{{az.name}}</div>
                     </div>
                     <div class="extra content">
-                        {%if az.isactive%}
+                        {%if timenow > az.start_time and timenow < az.end_time%}
                             در حال برگزاری
                         {%else%}
                             آزمون فعال نیست
