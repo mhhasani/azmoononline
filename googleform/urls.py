@@ -1,3 +1,5 @@
+from formapp.views import delete_azmoon, delete_question
+from formapp.views import delete_class
 from formapp.views import activate_score_board
 from formapp.views import activate_natijeh
 from formapp.views import natijeh_azmoon
@@ -30,10 +32,13 @@ urlpatterns = [
     path('show_participant/<int:id>/',show_participant,name='part'),
     path('show_question/<int:id>/',show_questions,name='quest'),
     path('add_azmoon/<int:id>/',add_azmoon2, name='add_azmoon'),
+    path('delete_azmoon/<int:class_id>/<int:azmoon_id>/',delete_azmoon, name='delete_azmoon'),
     path('score_board/<int:id>/',score_board, name='score_board'),
     path('natijeh_azmoon/<int:id>/',natijeh_azmoon, name='natijeh_azmoon'),
     path('add_class/',add_class, name='add_class'),
+    path('delete_class/<int:id>/',delete_class, name='delete_class'),
     path('add_question/<int:id>/',add_question, name='add_question'),
+    path('delete_question/<int:class_id>/<int:question_id>/',delete_question, name='delete_question'),
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
     path('edit_class/<int:id>/',edit_class, name='edit_class'),    
     path('edit_azmoon/<int:id>/',edit_azmoon, name='edit_azmoon'),    

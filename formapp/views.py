@@ -126,7 +126,7 @@ def join_class(request,join_code):
 def show_azmoon(request,id):
     participant = Participant.objects.all().get(mellicode=request.user)
     participants = Participant.objects.all().filter(partclass__id=id).values()
-    cls = Class.objects.all().get(id=id)
+    cls = get_object_or_404(Class,id=id)
     az = Azmoon.objects.all().filter(azmoonclass__id=id).values()
     check_in_class = False
     for c in request.user.partclass.all():
@@ -150,7 +150,6 @@ def show_azmoon(request,id):
                 participant = participant,
                 partclass = cls
             )
-
             if cls.owner == participant.id:
                 p_class.semat = "Ostad"
             else:
@@ -184,7 +183,7 @@ def show_questions(request,id):
                 check_in_class = True
                 break
     if check_in_class:        
-        context = {'questions':question,'id':id,'azmoon':azmoon,'check_is_ostad':check_is_ostad(participant,cls)}
+        context = {'questions':question,'id':id,'azmoon':azmoon,'check_is_ostad':check_is_ostad(participant,cls),'class':cls}
         return render(request, 'show_question.html', context=context)
     else:
         return HttpResponse("آزمون یافت نشد")
@@ -721,7 +720,7 @@ def azmoon(request,id):
                     return render(request, 'azmoon.html', context=context)
         else:
             return HttpResponse("آزمون یافت نشد")   
-    elif azmoon.start_time > timezone.now():
+    elif azmoon.start_time > timezone.now() and azmoon.showable:
         return HttpResponse(azmoon.start_time - timezone.now())
     elif azmoon.Finished:
         return HttpResponse("آزمون به پایان رسیده است")   
@@ -751,6 +750,7 @@ def finish_azmoon(request,id):
     else:
         return HttpResponse("آزمون مورد نظر یافت نشد")
 
+@login_required
 def finish_azmoon_all(request,id):
     participant = Participant.objects.all().get(mellicode = request.user)
     azmoon = get_object_or_404(Azmoon, id=id)
@@ -772,6 +772,61 @@ def finish_azmoon_all(request,id):
                 examin.Finished = True
                 examin.save()
         else:
-            azmoon.showable=True
             azmoon.Finished=False
             azmoon.save()
+
+@login_required
+def delete_class(request,id):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    cls = get_object_or_404(Class,id=id) 
+    if cls.owner == participant.id:
+        for azmoon in Azmoon.objects.all():
+            for clsa in azmoon.azmoonclass.all():
+                if clsa.id == cls.id:
+                    delete_azmoon(request,id,azmoon.id)
+                    break
+        for pc in Part_class.objects.all().filter(partclass = cls):
+            p = Part_class.objects.all().get(id = pc.id)
+            if p.partclass == cls:
+                p.delete()       
+        cls.delete()
+        return redirect('class')
+    else:
+        return HttpResponse("شما دسترسی لازم برای حذف این کلاس را ندارید")
+
+@login_required
+def delete_azmoon(request,class_id,azmoon_id):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    azmoon = get_object_or_404(Azmoon,id=azmoon_id)
+    cls = get_object_or_404(Class,id = class_id)
+    pc = get_object_or_404(Part_class,participant=participant,partclass=cls)
+    if pc.semat == "Ostad":
+        for examiner in Examiner.objects.all().filter(partclass = cls,azmoon=azmoon):
+            examin = Examiner.objects.all().get(id = examiner['id'])
+            for answer in Answer.objects.all().filter(examiner=examin):
+                ans = Answer.objects.all().get(id = answer.id)
+                ans.delete()
+            examin.delete()
+        for q in Question.objects.all().filter(azmoon=azmoon):
+            delete_question(request,class_id,q.id)
+        azmoon.delete()
+        if Class.objects.all().filter(id = class_id):
+            return redirect('azmoon',class_id)
+        else:
+            return redirect('class')
+    else:
+        return HttpResponse("شما دسترسی لازم برای حذف این آزمون را ندارید")
+
+@login_required
+def delete_question(request,class_id,question_id):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    question = get_object_or_404(Question,id=question_id)
+    cls = get_object_or_404(Class,id = class_id)
+    pc = get_object_or_404(Part_class,participant=participant,partclass=cls)
+    if pc.semat == "Ostad":
+        for q in question.azmoon.all():
+            if q.id:
+                question.delete()
+                return redirect("quest",q.id)
+    else:
+        return HttpResponse("شما دسترسی لازم برای حذف این سوال را ندارید")
