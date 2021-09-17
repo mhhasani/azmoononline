@@ -11,7 +11,51 @@
 </head>
 
 <body dir = 'rtl'>
-    <h1>زمان باقی مانده:{{time}}</h1>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+p {
+  text-align: right;
+  font-size: 20px;
+  margin-top: 0px;
+}
+</style>
+</head>
+<body>
+
+<p id="demo"></p>
+<script >
+var d = "{{date}}"
+var n = "{{now}}"
+// Set the date we're counting down to
+var countDownDate = new Date(d).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+    
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+    
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+  document.getElementById("demo").innerHTML = (days + "روز " + hours + "ساعت "
+  + minutes + "دقیقه " + seconds + "ثانیه تا اتمام آزمون ");
+    
+  // If the count down is over, write some text 
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "وقت آزمون تمام است";
+  }
+}, 1000);
+</script>
+
     <h1> سوالات:</h1>
         <!-- <h1>{{question.Q_text}}</h1>
         <img src="{{questions.i.Q_image}}"><br>

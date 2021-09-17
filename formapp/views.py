@@ -10,6 +10,7 @@ from openpyxl import Workbook
 from django.shortcuts import get_object_or_404
 from django.forms import formset_factory
 from django.utils import timezone
+from datetime import timedelta
 
 def check_is_ostad(participant,cls):
     part = get_object_or_404(Part_class,participant=participant,partclass=cls)
@@ -18,6 +19,11 @@ def check_is_ostad(participant,cls):
     else:
         return False
 
+def convert_time_to_js(time,plus=None):
+    if plus:
+        time = time + plus
+    date = str(time.month) + " " + str(time.day) + ", " + str(time.year) +" "+ str(time.hour) + ":" + str(time.minute) + ":" + str(time.second)
+    return date
 
 @csrf_exempt
 def signup(request):
@@ -174,7 +180,13 @@ def show_questions(request,id):
     question = Question.objects.all().filter(azmoon__id=id).values()
     participant = Participant.objects.all().get(mellicode = request.user)
     azmoon = get_object_or_404(Azmoon, id=id)
-    examiner =get_object_or_404(Examiner , participant=participant,azmoon=azmoon)
+    date = convert_time_to_js(azmoon.start_time,timedelta(hours=4, minutes=30))
+    now = convert_time_to_js(timezone.now())
+    end = convert_time_to_js(azmoon.end_time,timedelta(hours=4, minutes=30))
+    print(now,date)
+    examiner = Examiner.objects.all().filter(participant=participant,azmoon=azmoon)
+    if examiner:
+        examiner = Examiner.objects.all().get(participant=participant,azmoon=azmoon)
     check_in_class = False
     cls = None
     for clsp in participant.partclass.all():
@@ -184,7 +196,7 @@ def show_questions(request,id):
                 check_in_class = True
                 break
     if check_in_class:        
-        context = {'questions':question,'id':id,'azmoon':azmoon,'check_is_ostad':check_is_ostad(participant,cls),'class':cls,'examiner':examiner}
+        context = {'questions':question,'id':id,'azmoon':azmoon,'check_is_ostad':check_is_ostad(participant,cls),'class':cls,'examiner':examiner,'date':date,'now':now,'end':end}
         return render(request, 'show_question.html', context=context)
     else:
         return HttpResponse("آزمون یافت نشد")
@@ -535,32 +547,35 @@ def score_board(request,id):
         if azmoon.isactive_score_board or check_is_ostad(participant,cls):   
             examiners = Examiner.objects.all().filter(azmoon__id = id)
             tedad = len(examiners)
-            for examiner in examiners:
-                sahih = 0
-                ghalat = 0
-                nazade = 0
-                an = Answer.objects.all().filter(examiner__id=examiner.id)
-                for answer in an:
-                    if answer.answer == None:
-                        nazade +=1
-                    elif answer.answer == answer.question.correct_answer:
-                        sahih +=1
-                    else:
-                        ghalat += 1
-                examiner.percent_score = ((3*sahih - ghalat)*100)/(3*(question.count()))
-                examiner.score = (sahih/question.count())*20
-                examiner.save()
-            rank = 1
-            for examiner1 in examiners:
-                for examiner2 in examiners:
-                    if examiner2.percent_score>examiner1.percent_score:
-                        rank+=1
-                examiner1.rank = rank 
-                examiner1.save()
+            if question.count():
+                for examiner in examiners:
+                    sahih = 0
+                    ghalat = 0
+                    nazade = 0
+                    an = Answer.objects.all().filter(examiner__id=examiner.id)
+                    for answer in an:
+                        if answer.answer == None:
+                            nazade +=1
+                        elif answer.answer == answer.question.correct_answer:
+                            sahih +=1
+                        else:
+                            ghalat += 1
+                    examiner.percent_score = ((3*sahih - ghalat)*100)/(3*(question.count()))
+                    examiner.score = (sahih/question.count())*20
+                    examiner.save()
                 rank = 1
-            examiners = Examiner.objects.all().filter(azmoon__id = id).order_by('rank')
-            context = {'id':id,'examiners':examiners,'questions':question,'azmoon':azmoon,'tedad':tedad,'pc':pc}
-            return render(request, 'score_board.html',context=context) 
+                for examiner1 in examiners:
+                    for examiner2 in examiners:
+                        if examiner2.percent_score>examiner1.percent_score:
+                            rank+=1
+                    examiner1.rank = rank 
+                    examiner1.save()
+                    rank = 1
+                examiners = Examiner.objects.all().filter(azmoon__id = id).order_by('rank')
+                context = {'id':id,'examiners':examiners,'questions':question,'azmoon':azmoon,'tedad':tedad,'pc':pc}
+                return render(request, 'score_board.html',context=context)
+            else:
+                return HttpResponse("آزمون سوالی ندارد")        
         else:
             return HttpResponse("جدول امتیازات فعال نیست")        
     else:
@@ -575,7 +590,7 @@ def natijeh_azmoon(request,id):
     else:
         examiner = get_object_or_404(Examiner, id=id)
     azmoon = get_object_or_404(Azmoon, id=examiner.azmoon.id)
-    question = Question.objects.all().filter(azmoon__id=azmoon.id).values()
+    question = Question.objects.all().filter(azmoon=azmoon).values()
     check_in_class = False
     cls=None
     for clsp in participant.partclass.all():
@@ -587,23 +602,25 @@ def natijeh_azmoon(request,id):
     my_part_class = get_object_or_404(Part_class,participant=participant,partclass=cls)
     if check_in_class and (examiner.participant == participant or my_part_class.semat == "Ostad"):
         if azmoon.isactive_natijeh  or check_is_ostad(participant,cls):
-            sahih = 0
-            ghalat = 0
-            nazade = 0
-            an = Answer.objects.all().filter(examiner__id=examiner.id)
-            for answer in an:
-                if answer.answer == None:
-                    nazade +=1
-                elif answer.answer == answer.question.correct_answer:
-                    sahih +=1
-                else:
-                    ghalat += 1
+            examiners = Examiner.objects.all().filter(azmoon = azmoon)
             if question.count():
-                examiner.percent_score = ((3*sahih - ghalat)*100)/(3*(question.count()))
-                examiner.score = (sahih/question.count())*20
-                examiner.save()
+                for examiner in examiners:
+                    sahih = 0
+                    ghalat = 0
+                    nazade = 0
+                    an = Answer.objects.all().filter(examiner__id=examiner.id)
+                    for answer in an:
+                        if answer.answer == None:
+                            nazade +=1
+                        elif answer.answer == answer.question.correct_answer:
+                            sahih +=1
+                        else:
+                            ghalat += 1
+                    examiner.percent_score = ((3*sahih - ghalat)*100)/(3*(question.count()))
+                    examiner.score = (sahih/question.count())*20
+                    examiner.save()
                 rank = 1
-                examiners = Examiner.objects.all().filter(azmoon__id = id)
+                examiners = Examiner.objects.all().filter(azmoon = azmoon)
                 for examiner1 in examiners:
                     for examiner2 in examiners:
                         if examiner2.percent_score>examiner1.percent_score:
@@ -612,6 +629,7 @@ def natijeh_azmoon(request,id):
                     examiner1.save()
                     rank = 1
                 examiner = Examiner.objects.all().get(id = id)
+                an = Answer.objects.all().filter(examiner__id=examiner.id)
                 context = {'id':id,'examiner':examiner,'questions':question,'answers':an,'azmoon':azmoon}
                 return render(request, 'natijeh_azmoon.html',context=context) 
             else:
@@ -656,7 +674,8 @@ def azmoon(request,id):
     participant = Participant.objects.all().get(mellicode = request.user)
     azmoon = get_object_or_404(Azmoon, id=id)
     finish_azmoon_all(request,id)
-    time = azmoon.end_time - timezone.now()
+    date = convert_time_to_js(azmoon.end_time,timedelta(hours=4, minutes=30))
+    now = convert_time_to_js(timezone.now())
     length = question.count()
     if length:
         if (azmoon.showable) and ((azmoon.start_time<timezone.now() and azmoon.end_time > timezone.now())):
@@ -703,14 +722,14 @@ def azmoon(request,id):
                         azmoon.Question_number = q.count()
                         azmoon.save()
                         length = azmoon.Question_number
-                        context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QuestionFormSet,'Len':length,'qf':qf,'time':time}  
+                        context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QuestionFormSet,'Len':length,'qf':qf,'date':date,'now':now}  
                         return render(request, 'azmoon.html', context=context)
                     else:
                         return HttpResponse("شما قبلا آزمون را ثبت کرده اید!")
                 if request.method == "POST":
                     QuestionFormSet = formset_factory(Azmoon_Form,extra=len(question))
                     QQ = QuestionFormSet(request.POST)
-                    context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QQ,'Len':length,'qf':qf,'time':time}
+                    context = {'questions':question,'id':id,'azmoon':azmoon,'forms':QQ,'Len':length,'qf':qf,'date':date,'now':now}
                     c = examiner.get()
                     c.end_time = timezone.now()
                     c.save()
@@ -728,7 +747,7 @@ def azmoon(request,id):
             else:
                 return HttpResponse("آزمون یافت نشد")   
         elif azmoon.start_time > timezone.now() and azmoon.showable:
-            return HttpResponse(azmoon.start_time - timezone.now())
+            return HttpResponse("آزمون هنوز شروع نشده است")
         elif azmoon.Finished:
             return HttpResponse("آزمون به پایان رسیده است")   
         else:
