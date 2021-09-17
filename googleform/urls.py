@@ -1,10 +1,11 @@
+from formapp.views import change_link_class
 from formapp.views import delete_azmoon, delete_question
 from formapp.views import delete_class
 from formapp.views import activate_score_board
 from formapp.views import activate_natijeh
 from formapp.views import natijeh_azmoon
 from formapp.views import score_board
-from formapp.views import finish_azmoon
+# from formapp.views import finish_azmoon
 from formapp.views import azmoon
 from formapp.views import showable_azmoon
 from formapp.views import change_semat
@@ -41,10 +42,11 @@ urlpatterns = [
     path('delete_question/<int:class_id>/<int:question_id>/',delete_question, name='delete_question'),
     path('edit_question/<int:q_id>/<int:a_id>/',edit_question, name='edit_question'),    
     path('edit_class/<int:id>/',edit_class, name='edit_class'),    
+    path('change_link_class/<int:id>/',change_link_class, name='change_link_class'),    
     path('edit_azmoon/<int:id>/',edit_azmoon, name='edit_azmoon'),    
     path('activate_natijeh/<int:id>/',activate_natijeh, name='activate_natijeh'),    
     path('activate_score_board/<int:id>/',activate_score_board, name='activate_score_board'),    
-    path('finish_azmoon/<int:id>/',finish_azmoon, name='finish_azmoon'),    
+    # path('finish_azmoon/<int:id>/',finish_azmoon, name='finish_azmoon'),    
     path('azmoon/<int:id>/',azmoon, name='sherkat_dar_azmoon'),    
     path('showable_azmoon/<int:id>/',showable_azmoon, name='showable_azmoon'),    
     path('change_semat/<int:id>/',change_semat, name='change_semat'),    

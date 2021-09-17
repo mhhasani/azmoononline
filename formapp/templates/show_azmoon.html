@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}Participant{% endblock %}
-{%block titr%}آزمون ها{% endblock %}  
+{%block titr%} کلاس {{class.name}} {% endblock %}  
 
 <body>
 {% block main%} 
@@ -20,6 +20,7 @@
             
             <a class="item" href="{% url 'add_azmoon' id %}">ایجاد آزمون جدید</a>
             <a class="item" href="{% url 'edit_class' id %}">ویرایش کلاس</a>
+            <a class="item" href="{% url 'change_link_class' id %}">تغییر لینک کلاس</a>
             {% if participant.id == class.owner%}
             <a class="item" href="{% url 'delete_class' id %}">حذف کلاس</a>
             {%endif%}

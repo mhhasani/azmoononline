@@ -45,7 +45,7 @@
     <div class="ui small secondary stackable menu ca-title">
     <div class="ui left secondary stackable menu">
         <a class="item" href="{% url 'sherkat_dar_azmoon' id %}">شرکت در آزمون</a>
-        <a class="item" href="{% url 'natijeh_azmoon' id %}">نتیجه آزمون</a>
+        <a class="item" href="{% url 'natijeh_azmoon' examiner.id %}">نتیجه آزمون</a>
         <a class="item" href="{% url 'score_board' id %}">جدول نمره ها</a>
     </div>
     </div>

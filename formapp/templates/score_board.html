@@ -211,7 +211,11 @@
         {{examiner.end_time}}
         <span class="humanize_duration" data-duration="0"></span>
     </td>
+    {%if pc.semat == "Ostad"%}
+    <td><a href="{% url 'natijeh_azmoon' examiner.id %}">{{examiner.percent_score}}</a></td>
+    {%else%}
     <td>{{examiner.percent_score}}</td>
+    {%endif%}
     {% endfor %}
 
                 </tr>
