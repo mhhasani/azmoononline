@@ -683,8 +683,8 @@ def change_semat(request,id):
 def azmoon(request,id):
     question = Question.objects.all().filter(azmoon__id=id).values()
     participant = Participant.objects.all().get(mellicode = request.user)
-    azmoon = get_object_or_404(Azmoon, id=id)
     finish_azmoon_all(request,id)
+    azmoon = get_object_or_404(Azmoon, id=id)
     date = convert_time_to_js(azmoon.end_time,timedelta(hours=4, minutes=30))
     now = convert_time_to_js(timezone.now())
     length = question.count()
