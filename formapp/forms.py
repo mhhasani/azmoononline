@@ -51,6 +51,11 @@ class AzmoonForm2(forms.Form):
     name = forms.CharField()
     start_time = forms.SplitDateTimeField(initial=timezone.now)
     end_time = forms.SplitDateTimeField(initial=timezone.now)
+    def clean(self):
+        cd = self.cleaned_data
+        if cd.get('end_time') < cd.get('start_time'):
+            self.add_error('end_time', "زمان پایان آزمون باید بعد از شروع آزمون باشد!")     
+        return cd
 
 class ClassForm(forms.Form):
     name = forms.CharField()
