@@ -100,6 +100,17 @@ def show_class(request):
         Class.participant_number = part.count()
         Class.azmoon_number = az.count()
         Class.save()
+        pc = Part_class.objects.all().filter(participant = participant).filter(partclass = Class)
+        if not pc:
+            p_class = Part_class.objects.create(
+                participant = participant,
+                partclass = Class
+            )
+            if Class.owner == participant.id:
+                p_class.semat = "Ostad"
+            else:
+                p_class.semat = "daneshamoz"
+            p_class.save() 
     context = {'participant':participant,'pc':pc}
     return render(request, 'show_class.html', context=context)
 
