@@ -100,8 +100,8 @@ def show_class(request):
         Class.participant_number = part.count()
         Class.azmoon_number = az.count()
         Class.save()
-        pc = Part_class.objects.all().filter(participant = participant).filter(partclass = Class)
-        if not pc:
+        Pc = Part_class.objects.all().filter(participant = participant).filter(partclass = Class)
+        if not Pc:
             p_class = Part_class.objects.create(
                 participant = participant,
                 partclass = Class
