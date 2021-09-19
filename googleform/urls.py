@@ -1,4 +1,5 @@
-from formapp.views import change_link_class
+from formapp.views import Home
+from formapp.views import change_link_class,Dashboard
 from formapp.views import delete_azmoon, delete_question
 from formapp.views import delete_class
 from formapp.views import activate_score_board
@@ -53,7 +54,8 @@ urlpatterns = [
     path('accounts/', include('formapp.urls')),
     path('accounts/', include('django.contrib.auth.urls')), 
     path('Profile/', Profile , name = 'Profile'),
-    path('',TemplateView.as_view(template_name='Home.html'),name='Home'),
+    path('',Home,name='Home'),
+    path('Dashboard/',Dashboard,name="Dashboard"),
     path('__debug__/', include(debug_toolbar.urls)),
 ] 
 

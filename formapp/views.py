@@ -40,7 +40,31 @@ def signup(request):
         return render(request, 'registration/signup.html', context=context)
 
 def Home(request):
-    return render(request, 'Home.html')
+    user = Participant.objects.all().filter(mellicode=request.user)
+    if not user:
+        return render(request, 'Home.html')
+    return redirect('Dashboard')
+
+@login_required
+def Dashboard(request):
+    participant = Participant.objects.all().get(mellicode=request.user)
+    classes_object = []
+    all_azmoon = []
+    for cls in participant.partclass.all():
+        cls = Class.objects.all().get(id = cls.id)
+        azmoon = Azmoon.objects.all().filter(azmoonclass = cls)
+        for az in azmoon:
+            az = Azmoon.objects.all().get(id = az.id)
+            if az.start_time>timezone.now() or (az.end_time>timezone.now() and az.start_time<timezone.now()):
+                date = convert_time_to_js(az.start_time,timedelta(hours=4, minutes=30))
+                now = convert_time_to_js(timezone.now())
+                end = convert_time_to_js(az.end_time,timedelta(hours=4, minutes=30))
+                all_azmoon.append([cls,az,az.start_time,check_is_ostad(participant,cls),date,now,end])
+        classes_object.append(cls)
+    timenow=timezone.now()
+
+    context = {'participant':participant,'azmoon':all_azmoon,'classes':classes_object,'timenow':timenow}
+    return render(request, 'Dashboard.html',context=context)
 
 def Profile(request):
     participant = request.user

@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'pjn0#8tlv%)=&_wjq)i1g@zk*h9y*nwyyw*)#^@-gi^f9^t#cl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -124,7 +124,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = '/home/mohsen1234/azmoononline/googleform/formapp/static'
 
-LOGIN_REDIRECT_URL = 'class'
+LOGIN_REDIRECT_URL = 'Dashboard'
 LOGOUT_REDIRECT_URL = 'Home' 
 AUTH_USER_MODEL = 'formapp.Participant'
 
