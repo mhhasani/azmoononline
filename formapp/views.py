@@ -55,6 +55,9 @@ def Dashboard(request):
         azmoon = Azmoon.objects.all().filter(azmoonclass = cls)
         for az in azmoon:
             az = Azmoon.objects.all().get(id = az.id)
+            q = Question.objects.all().filter(azmoon__id=az.id)
+            az.Question_number = q.count()
+            az.save()
             if az.start_time>timezone.now() or (az.end_time>timezone.now() and az.start_time<timezone.now()):
                 date = convert_time_to_js(az.start_time,timedelta(hours=4, minutes=30))
                 now = convert_time_to_js(timezone.now())
