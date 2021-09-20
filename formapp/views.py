@@ -65,7 +65,8 @@ def Dashboard(request):
                 all_azmoon.append([cls,az,az.start_time,check_is_ostad(participant,cls),date,now,end])
         classes_object.append(cls)
     all_azmoon = sorted(all_azmoon, key=lambda x: x[2])
-    all_azmoon = [all_azmoon[0]]
+    if all_azmoon != []:
+        all_azmoon = [all_azmoon[0]]
     timenow=timezone.now()
 
     context = {'participant':participant,'azmoon':all_azmoon,'classes':classes_object,'timenow':timenow}
