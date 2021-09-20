@@ -24,7 +24,7 @@
                           margin-top: 0px;
                         }
                         </style>
-                        <p id="demo"></p>
+                        <p id="{{az.1.id}}"></p>
                         <script>
                         var d = "{{az.4}}"
                         var n = "{{az.5}}"
@@ -49,17 +49,17 @@
                           var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                             
                           // Output the result in an element with id="demo"
-                          document.getElementById("demo").innerHTML = (hours + ":"
+                          document.getElementById("{{az.1.id}}").innerHTML = (hours + ":"
                           + minutes + ":" + seconds +" تا شروع آزمون ");
                             
                           // If the count down is over, write some text 
                           if (distance < 0  && now - End < 0 ) {
                             clearInterval(x);
-                            document.getElementById("demo").innerHTML = "آزمون در حال برگزاری است";
+                            document.getElementById("{{az.1.id}}").innerHTML = "آزمون در حال برگزاری است";
                           }
                           if (now - End > 0) {
                             clearInterval(x);
-                            document.getElementById("demo").innerHTML = "آزمون به پایان رسیده است";      
+                            document.getElementById("{{az.1.id}}").innerHTML = "آزمون به پایان رسیده است";      
                           }
                         }, 1000);
                         </script>  
