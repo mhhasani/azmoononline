@@ -29,16 +29,16 @@
     {%endif%}
     <div class="ui three stackable cards">
         {%for az in azmoon %}
-            {%if az.showable or check_is_ostad %}
-                <a class="ui small link card course-card" href= "{% url 'quest' az.id %}">
+            {%if az.0.showable or check_is_ostad %}
+                <a class="ui small link card course-card" href= "{% url 'quest' az.0.id %}">
                     <div class="image">
                         <img src="https://static.quera.ir/overview/course-images/11-small.0-b062dbbb9f04.jpg">
                     </div>
                     <div class="content" style="position: relative; text-align: center;">
-                        <div class="header">{{az.name}}</div>
+                        <div class="header">{{az.0.name}}</div>
                     </div>
                     <div class="extra content">
-                        {%if timenow > az.start_time and timenow < az.end_time%}
+                        {%if timenow > az.0.start_time and timenow < az.0.end_time%}
                             در حال برگزاری
                         {%else%}
                             آزمون فعال نیست
@@ -46,12 +46,12 @@
                     </div>
                         {% if check_is_ostad%}
                         <div class="extra content">
-                            {{az.Question_number}} سوال
+                            {{az.0.Question_number}} سوال
                         </div>
                         {%endif%}
                         {% if check_is_ostad%}
                         <div class="extra content">
-                            {%if az.showable%}
+                            {%if az.0.showable%}
                                 آشکار
                             {%else%}
                                 پنهان
@@ -88,35 +88,5 @@
             </div>
             <div class="four wide column">
                 <div>
-                
 
-                        
-
-<script>
-    $('.training-progress').progress();
-</script>
-
-                    
-
-
-<script>
-    $('.training-progress').progress();
-</script>
-
-                </div>
-                <script>
-                    $(document).ready(function () {
-                        quera.finish_time = moment('2016-02-12T23:55:55+03:30');
-                        quera.offset = moment('2021-08-10T22:12:35.640656+04:30').diff(moment());
-                        quera.time = moment();
-                        quera.update_clock();
-                        quera.times = {}
-                    });
-                </script>
-                
-            </div>
-        </div>
-    </div>
-    </div>
-    
 {% endblock %}

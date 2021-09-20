@@ -64,6 +64,8 @@ def Dashboard(request):
                 end = convert_time_to_js(az.end_time,timedelta(hours=4, minutes=30))
                 all_azmoon.append([cls,az,az.start_time,check_is_ostad(participant,cls),date,now,end])
         classes_object.append(cls)
+    all_azmoon = sorted(all_azmoon, key=lambda x: x[2])
+    all_azmoon = [all_azmoon[0]]
     timenow=timezone.now()
 
     context = {'participant':participant,'azmoon':all_azmoon,'classes':classes_object,'timenow':timenow}
@@ -186,7 +188,11 @@ def show_azmoon(request,id):
             azmoon['Question_number'] = q.count()
         azmoon=[]
         for a in az:
-            azmoon.append(a)
+            a = Azmoon.objects.all().get(id = a['id'])
+            date = convert_time_to_js(a.start_time,timedelta(hours=4, minutes=30))
+            now = convert_time_to_js(timezone.now())
+            end = convert_time_to_js(a.end_time,timedelta(hours=4, minutes=30))
+            azmoon.append([a,date,now,end])
         cls = Class.objects.all().get(id=id)
         pc = Part_class.objects.all().filter(participant = participant).filter(partclass__id=id)
         if not pc:
